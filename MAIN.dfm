@@ -3403,6 +3403,9 @@ object frmMenu: TfrmMenu
             end
             item
               Item = dxSTBJ
+            end
+            item
+              Item = dxListProduksi
             end>
         end
         object dxNavBar2Group3: TdxNavBarGroup
@@ -3650,6 +3653,10 @@ object frmMenu: TfrmMenu
         object dxAbsensi: TdxNavBarItem
           Caption = 'Lap. Absensi'
           OnClick = dxAbsensiClick
+        end
+        object dxListProduksi: TdxNavBarItem
+          Caption = 'List Hasil Produksi'
+          OnClick = dxListProduksiClick
         end
       end
     end
