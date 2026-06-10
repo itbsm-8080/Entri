@@ -151,7 +151,7 @@ procedure TfrmReturBeli.initgrid;
 begin
   CDS.EmptyDataSet;
   CDS.Append;
-  CDS.FieldByName('QTY').AsInteger    := 0;
+  CDS.FieldByName('QTY').AsFloat    := 0;
   CDS.Post;
 
 end;
@@ -300,7 +300,7 @@ begin
     zAddField(FCDS, 'No', ftInteger, False);
     zAddField(FCDS, 'SKU', ftInteger, False);
     zAddField(FCDS, 'NamaBarang', ftString, False,100);
-    zAddField(FCDS, 'QTY', ftInteger, False);
+    zAddField(FCDS, 'QTY', ftFloat, False);
     zAddField(FCDS, 'Satuan', ftString, False, 10);
     zAddField(FCDS, 'Harga', ftFloat, False);
     zAddField(FCDS, 'Disc', ftFloat, False);
@@ -457,9 +457,9 @@ ExecSQLDirect(frmMenu.conn, s);
    begin
     S:='insert into tret_dtl (Retd_ret_nomor,Retd_brg_kode,Retd_brg_satuan,Retd_qty,Retd_discpr,Retd_harga,Retd_nourut,Retd_expired) values ('
       + Quot(edtNomor.Text) +','
-      + IntToStr(CDS.FieldByName('SKU').AsInteger) +','
+      + FloatToStr(CDS.FieldByName('SKU').AsFloat) +','
       + Quot(CDS.FieldByName('satuan').AsString) +','
-      + IntToStr(CDS.FieldByName('QTY').AsInteger) +','
+      + FloatToStr(CDS.FieldByName('QTY').AsFloat) +','
       + FloatToStr(cVarToFloat(CDS.FieldByName('DISC').AsFloat))+','
       + FloatToStr(cVarToFloat(CDS.FieldByName('harga').AsFloat))+','
       + IntToStr(i)  +','
@@ -659,7 +659,7 @@ begin
                       CDS.FieldByName('SKU').AsInteger        := fieldbyname('Retd_brg_kode').AsInteger;
                       CDS.FieldByName('NamaBarang').AsString      := fieldbyname('brg_nama').Asstring;
                       CDS.FieldByName('satuan').AsString      := fieldbyname('Retd_brg_satuan').Asstring;
-                      CDS.FieldByName('QTY').AsInteger        := fieldbyname('Retd_qty').AsInteger;
+                      CDS.FieldByName('QTY').AsFloat        := fieldbyname('Retd_qty').AsFloat;
                       CDS.FieldByName('Harga').AsFloat        := fieldbyname('Retd_harga').AsFloat;
                       CDS.FieldByName('disc').AsFloat        := fieldbyname('Retd_discpr').AsFloat;
                       CDS.FieldByName('total').AsFloat        := fieldbyname('nilai').AsFloat;

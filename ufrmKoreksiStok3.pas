@@ -1,4 +1,4 @@
-unit ufrmKoreksiStok2;
+unit ufrmKoreksiStok3;
 
 interface
 
@@ -24,7 +24,7 @@ uses
   AdvEdBtn, MyAccess;
 
 type
-  TfrmKoreksiStok2 = class(TForm)
+  TfrmKoreksiStok3 = class(TForm)
     AdvPanel1: TAdvPanel;
     lbljudul: TLabel;
     AdvPanel2: TAdvPanel;
@@ -33,59 +33,64 @@ type
     dttanggal: TDateTimePicker;
     AdvPanel3: TAdvPanel;
     edtNomor: TAdvEdit;
-    cxGrid: TcxGrid;
-    cxGrdMain: TcxGridDBTableView;
-    clNo: TcxGridDBColumn;
-    clSKU: TcxGridDBColumn;
-    clNamaBarang: TcxGridDBColumn;
-    clfisik: TcxGridDBColumn;
-    clSatuan: TcxGridDBColumn;
-    clExpired: TcxGridDBColumn;
-    cxGrdDetail: TcxGridDBTableView;
-    lvMaster: TcxGridLevel;
     AdvPanel4: TAdvPanel;
     cxButton8: TcxButton;
     cxButton2: TcxButton;
     cxButton1: TcxButton;
-    clstoksystem: TcxGridDBColumn;
     PopupMenu1: TPopupMenu;
     HapusRecord1: TMenuItem;
-    clQtyKoreksi: TcxGridDBColumn;
-    clHarga: TcxGridDBColumn;
-    clNilai: TcxGridDBColumn;
     Button1: TButton;
     Button2: TButton;
     OpenDialog1: TOpenDialog;
     Button3: TButton;
     Label1: TLabel;
     edtKodeBarang: TAdvEditBtn;
-    edtQty: TAdvEdit;
-    Label6: TLabel;
     edtNamaBarang: TAdvEdit;
     Button4: TButton;
-    clGudang: TcxGridDBColumn;
-    clNamaGudang: TcxGridDBColumn;
     Button5: TButton;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     Label3: TLabel;
-    Label5: TLabel;
     dtExpired: TDateTimePicker;
-    edtIdBatch: TAdvEdit;
-    Label7: TLabel;
-    edtMemo: TAdvEdit;
+    cxGrid1: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
+    clNo2: TcxGridDBColumn;
+    clMemo2: TcxGridDBColumn;
+    clQty2: TcxGridDBColumn;
+    clIdBatch2: TcxGridDBColumn;
+    cxGridDBTableView2: TcxGridDBTableView;
+    cxGridLevel1: TcxGridLevel;
+    cxGrid: TcxGrid;
+    cxGrdMain: TcxGridDBTableView;
+    clNo: TcxGridDBColumn;
+    clSKU: TcxGridDBColumn;
+    clNamaBarang: TcxGridDBColumn;
+    clSatuan: TcxGridDBColumn;
+    clExpired: TcxGridDBColumn;
+    clfisik: TcxGridDBColumn;
+    clstoksystem: TcxGridDBColumn;
+    clQtyKoreksi: TcxGridDBColumn;
+    clHarga: TcxGridDBColumn;
+    clNilai: TcxGridDBColumn;
+    clGudang: TcxGridDBColumn;
+    clNamaGudang: TcxGridDBColumn;
+    cxGrdDetail: TcxGridDBTableView;
+    lvMaster: TcxGridLevel;
+    Button6: TButton;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure refreshdata;
     procedure simpandata;
     procedure dosliP(anomor : string );
-    procedure prosesnonbahan(aqty: Double);
     function GetCDS: TClientDataSet;
+    function GetCDS2: TClientDataSet;
 
     function getmaxkode:string;
     procedure FormCreate(Sender: TObject);
     procedure insertketampungan(anomor:string);
+    procedure tampildetail(aqty: Double);
+    procedure prosesnonbahan(aqty:Double);
     procedure cxButton8Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -108,24 +113,32 @@ type
       AButtonIndex: Integer);
     procedure Button5Click(Sender: TObject);
     procedure clQtyKoreksiPropertiesEditValueChanged(Sender: TObject);
+    procedure cxGridDBTableView1CellDblClick(
+      Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure Button6Click(Sender: TObject);
     private
-     buttonSelected  : integer;
-     FID : STRING;
-     FCDSSKU : TClientDataset;
-     FCDSGudang: TClientDataset;
-        FFLAGEDIT: Boolean;
-     xtotal : Double;
-         function GetCDSGudang: TClientDataset;
-         procedure initViewSKU;
+      buttonSelected  : integer;
+      FID : STRING;
+      FCDSSKU : TClientDataset;
+      FCDSGudang: TClientDataset;
+      FFLAGEDIT: Boolean;
+      xtotal : Double;
+      function GetCDSGudang: TClientDataset;
+      procedure initViewSKU;
+
       { Private declarations }
-     protected
-    FCDS: TClientDataSet;
+      protected
+      FCDS: TClientDataSet;
+      FCDS2: TClientDataSet;
   public
       property CDS: TClientDataSet read GetCDS write FCDS;
-          property CDSSKU: TClientDataSet read FCDSSKU write FCDSSKU;
-       property CDSGudang: TClientDataset read GetCDSGudang write FCDSGudang;
-          property ID: string read FID write FID;
-            property FLAGEDIT: Boolean read FFLAGEDIT write FFLAGEDIT;
+      property CDS2: TClientDataSet read GetCDS2 write FCDS2;
+      property CDSSKU: TClientDataSet read FCDSSKU write FCDSSKU;
+      property CDSGudang: TClientDataset read GetCDSGudang write FCDSGudang;
+      property ID: string read FID write FID;
+      property FLAGEDIT: Boolean read FFLAGEDIT write FFLAGEDIT;
     { Public declarations }
   end;
  const
@@ -133,7 +146,7 @@ type
     NOMERATOR = 'KOR';
 
 var
-  frmKoreksiStok2: TfrmKoreksiStok2;
+  frmKoreksiStok3: TfrmKoreksiStok3;
 
 implementation
 
@@ -141,25 +154,25 @@ uses MAIN,uModuleConnection,uFrmbantuan,Ulib,uReport;
 
 {$R *.dfm}
 
-procedure TfrmKoreksiStok2.FormShow(Sender: TObject);
+procedure TfrmKoreksiStok3.FormShow(Sender: TObject);
 begin
   refreshdata;
 end;
 
-procedure TfrmKoreksiStok2.FormClose(Sender: TObject;
+procedure TfrmKoreksiStok3.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Action := caFree;
   Release;
 end;
 
-procedure TfrmKoreksiStok2.FormKeyPress(Sender: TObject; var Key: Char);
+procedure TfrmKoreksiStok3.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   if Key = #13 then
      SelectNext(ActiveControl,True,True);
 end;
 
-procedure TfrmKoreksiStok2.refreshdata;
+procedure TfrmKoreksiStok3.refreshdata;
 begin
   FID:='';
   FLAGEDIT :=False;
@@ -169,110 +182,117 @@ begin
   initgrid;
 end;
 
-procedure TfrmKoreksiStok2.simpandata;
+procedure TfrmKoreksiStok3.simpandata;
 var
   s:string;
-  i:integer;
+  i, j:integer;
   tt : TStrings;
   anomor : string;
   asubtotal : Double;
 begin
-    asubtotal :=cVarToFloat(TcxDBGridHelper(cxGrdMain).GetFooterSummary('nilai'));
-   if flagedit then
-   begin
-   anomor := edtNomor.Text;
-      s:= 'update tkor_hdr set  '
-         + ' korh_tanggal = ' + QuotD(dttanggal.DateTime)+','
-         + ' korh_notes = ' + Quot('PRODUKSI ') + ','
-         + ' korh_gdg_kode = ' + Quot('')+','
-         + ' korh_total = ' + FloatToStr(asubtotal)+','
-         + ' date_modified  = ' + QuotD(cGetServerTime,True) + ','
-         + ' user_modified = ' + Quot(frmMenu.KDUSER)+','
-         + ' korh_produksi = '+ quot(edtnamabarang.text) + ','
-         + ' korh_expired = ' + quotd(dtexpired.Date) + ','
-         + ' korh_idbatch='+ Quot(edtIdBatch.Text)+','
-         + ' korh_memo = '+ Quot(edtmemo.Text)
-         + ' where korh_nomor = ' + Quot(edtNomor.Text) ;
-   end
-   else
-   begin
-     anomor := getmaxkode;
-     edtNomor.Text := anomor;
-      s:= ' insert into tkor_hdr '
-         + '( korh_nomor,korh_tanggal,korh_notes,korh_gdg_kode,korh_total,date_create,user_create,'
-         + ' korh_expired,korh_idbatch,korh_produksi,korh_memo) values ( '
-         + Quot(anomor) + ','
-         + Quotd(dttanggal.DateTime)+','
-         + Quot('PRODUKSI') + ','
-         + Quot('')+','
-         + FloatToStr(asubtotal)+','
-         + QuotD(cGetServerTime,True) + ','
-         + Quot(frmMenu.KDUSER) + ','
-         + quotd(dtExpired.Date) + ','
-         + Quot(edtIdBatch.text) + ','
-         + Quot(edtNamaBarang.Text)+','
-         + Quot(edtmemo.Text)
-         +')';
-   end;
-   // xExecQuery(s,frmMenu.conn);
-EnsureConnected(frmMenu.conn);
-ExecSQLDirect(frmMenu.conn, s);
-
-   tt := TStringList.Create;
-   s:= ' delete from tkor_dtl '
-      + ' where  kord_korh_nomor =' + quot(FID) ;
-   tt.Append(s);
-
-   i:=1;
-    CDS.First;
-while not CDS.Eof do
+  j:=1;
+  CDS2.First;
+  while not CDS2.Eof do
   begin
-   if CDS.FieldByName('sku').AsInteger >  0 then
-   begin
-        s:='insert into tkor_dtl '
-          + ' (kord_korh_nomor,kord_brg_kode,kord_satuan,kord_expired,kord_qty,kord_harga,kord_nilai,kord_stok,kord_nourut,kord_gdg_kode) values ( '
-          +  Quot(anomor) + ','
-          +  IntToStr(CDS.FieldByName('SKU').AsInteger) + ','
-          +  quot(CDS.FieldByName('satuan').AsString) + ','
-          + QuotD(CDS.FieldByName('expired').Asdatetime) +','
-          +  floatToStr(CDS.FieldByName('qty').Asfloat) + ','
-          +  floatToStr(CDS.FieldByName('harga').Asfloat) + ','
-          +  floatToStr(CDS.FieldByName('nilai').Asfloat) + ','
-          +  floatToStr(CDS.FieldByName('fisik').Asfloat) + ','
-          +  IntToStr(i) + ','
-          + Quot(cds.fieldbyname('gudang').asstring)
-          +');';
-       tt.Append(s);
-     end;
-     CDS.next;
-       Inc(i);
-   end;
+    tampildetail(CDS2.FieldByName('Qty').Asfloat);
 
-     try
-        for i:=0 to tt.Count -1 do
-        begin
-            // xExecQuery(tt[i],frmMenu.conn);
-            EnsureConnected(frmMenu.conn);
-            ExecSQLDirect(frmMenu.conn, tt[i]);
-         end;
-      finally
-        tt.Free;
+    asubtotal :=cVarToFloat(TcxDBGridHelper(cxGrdMain).GetFooterSummary('nilai'));
+    if flagedit then
+    begin
+      anomor := edtNomor.Text;
+      s:= 'update tkor_hdr set  '
+      + ' korh_tanggal = ' + QuotD(dttanggal.DateTime)+','
+      + ' korh_notes = ' + Quot('PRODUKSI ') + ','
+      + ' korh_gdg_kode = ' + Quot('')+','
+      + ' korh_total = ' + FloatToStr(asubtotal)+','
+      + ' date_modified  = ' + QuotD(cGetServerTime,True) + ','
+      + ' user_modified = ' + Quot(frmMenu.KDUSER)+','
+      + ' korh_produksi = '+ quot(edtnamabarang.text) + ','
+      + ' korh_expired = ' + quotd(dtexpired.Date) + ','
+      + ' korh_idbatch='+ Quot(CDS2.FieldByName('Idbatch').AsString)+','
+      + ' korh_memo = '+ Quot(CDS2.FieldByName('Memo').AsString)
+      + ' where korh_nomor = ' + Quot(edtNomor.Text) ;
+    end
+    else
+    begin
+      anomor := getmaxkode;
+      edtNomor.Text := anomor;
+      s:= ' insert into tkor_hdr '
+      + '( korh_nomor,korh_tanggal,korh_notes,korh_gdg_kode,korh_total,date_create,user_create,'
+      + ' korh_expired,korh_idbatch,korh_produksi,korh_memo) values ( '
+      + Quot(anomor) + ','
+      + Quotd(dttanggal.DateTime)+','
+      + Quot('PRODUKSI') + ','
+      + Quot('')+','
+      + FloatToStr(asubtotal)+','
+      + QuotD(cGetServerTime,True) + ','
+      + Quot(frmMenu.KDUSER) + ','
+      + quotd(dtExpired.Date) + ','
+      + Quot(CDS2.FieldByName('Idbatch').AsString) + ','
+      + Quot(edtNamaBarang.Text) + ','
+      + Quot(CDS2.FieldByName('Memo').AsString)
+      +')';
+    end;
+    // xExecQuery(s,frmMenu.conn);
+    EnsureConnected(frmMenu.conn);
+    ExecSQLDirect(frmMenu.conn, s);
+
+    tt := TStringList.Create;
+    s:= ' delete from tkor_dtl '
+      + ' where  kord_korh_nomor =' + quot(FID) ;
+    tt.Append(s);
+
+    i:=1;
+    CDS.First;
+    while not CDS.Eof do
+    begin
+      if CDS.FieldByName('sku').AsInteger >  0 then
+      begin
+        s:='insert into tkor_dtl '
+        + ' (kord_korh_nomor,kord_brg_kode,kord_satuan,kord_expired,kord_qty,kord_harga,kord_nilai,kord_stok,kord_nourut,kord_gdg_kode) values ( '
+        +  Quot(anomor) + ','
+        +  IntToStr(CDS.FieldByName('SKU').AsInteger) + ','
+        +  quot(CDS.FieldByName('satuan').AsString) + ','
+        + QuotD(CDS.FieldByName('expired').Asdatetime) +','
+        +  floatToStr(CDS.FieldByName('qty').Asfloat) + ','
+        +  floatToStr(CDS.FieldByName('harga').Asfloat) + ','
+        +  floatToStr(CDS.FieldByName('nilai').Asfloat) + ','
+        +  floatToStr(CDS.FieldByName('fisik').Asfloat) + ','
+        +  IntToStr(i) + ','
+        + Quot(cds.fieldbyname('gudang').asstring)
+        +');';
+        tt.Append(s);
       end;
 
-    prosesnonbahan(StrToFloat(edtQty.Text));
+      CDS.next;
+      Inc(i);
+    end;
 
-   tt := TStringList.Create;
-   s:= ' delete from tkor_dtl2 '
+    try
+    for i:=0 to tt.Count -1 do
+    begin
+      // xExecQuery(tt[i],frmMenu.conn);
+      EnsureConnected(frmMenu.conn);
+      ExecSQLDirect(frmMenu.conn, tt[i]);
+    end;
+    finally
+      tt.Free;
+    end;
+
+    prosesnonbahan(CDS2.FieldByName('Qty').Asfloat);
+
+    tt := TStringList.Create;
+    s:= ' delete from tkor_dtl2 '
       + ' where kord_korh_nomor =' + quot(FID) ;
-   tt.Append(s);
+    tt.Append(s);
 
-   i:=1;
+    i:=1;
     CDS.First;
-while not CDS.Eof do
-  begin
-   if CDS.FieldByName('NamaBarang').AsString <> '' then
-   begin
-        s:='insert into tkor_dtl2 '
+    while not CDS.Eof do
+    begin
+      if CDS.FieldByName('NamaBarang').AsString <> '' then
+      begin
+        s:= 'insert into tkor_dtl2 '
           + ' (KORD_KORH_NOMOR,KORD_NBB_KETERANGAN,KORD_SATUAN,kord_QTY,KORD_HARGA,KORD_NILAI,kord_nourut) values ( '
           +  Quot(anomor) + ','
           +  Quot(CDS.FieldByName('NamaBarang').AsString) + ','
@@ -282,25 +302,29 @@ while not CDS.Eof do
           +  floatToStr(CDS.FieldByName('Nilai').Asfloat) + ','
           +  IntToStr(i)
           +');';
-       tt.Append(s);
-     end;
-     CDS.next;
-       Inc(i);
-   end;
-
-     try
-        for i:=0 to tt.Count -1 do
-        begin
-            // xExecQuery(tt[i],frmMenu.conn);
-            EnsureConnected(frmMenu.conn);
-            ExecSQLDirect(frmMenu.conn, tt[i]);
-         end;
-      finally
-        tt.Free;
+        tt.Append(s);
       end;
-end;
 
-procedure TfrmKoreksiStok2.doslip(anomor : string );
+      CDS.next;
+      Inc(i);
+    end;
+
+    try
+      for i:=0 to tt.Count -1 do
+      begin
+        // xExecQuery(tt[i],frmMenu.conn);
+        EnsureConnected(frmMenu.conn);
+        ExecSQLDirect(frmMenu.conn, tt[i]);
+      end;
+    finally
+      tt.Free;
+    end;
+
+    CDS2.next;
+    Inc(j);
+  end;
+end;
+procedure TfrmKoreksiStok3.doslip(anomor : string );
 var
   s: string ;
   ftsreport : TTSReport;
@@ -326,8 +350,7 @@ begin
   end;
 end;
 
-
-procedure TfrmKoreksiStok2.insertketampungan(anomor:String);
+procedure TfrmKoreksiStok3.insertketampungan(anomor:String);
 var
   s:string;
   tsql : TMyQuery;
@@ -394,7 +417,7 @@ ExecSQLDirect(frmMenu.conn, s);
 
 end;
 
-function TfrmKoreksiStok2.getmaxkode:string;
+function TfrmKoreksiStok3.getmaxkode:string;
 var
   s:string;
 begin
@@ -415,13 +438,14 @@ begin
 end;
 
 
-procedure TfrmKoreksiStok2.FormCreate(Sender: TObject);
+procedure TfrmKoreksiStok3.FormCreate(Sender: TObject);
 begin
 //     initViewSKU;
  TcxDBGridHelper(cxGrdMain).LoadFromCDS(CDS, False, False);
+  TcxDBGridHelper(cxGridDBTableView1).LoadFromCDS(CDS2, False, False);
 end;
 
-function TfrmKoreksiStok2.GetCDS: TClientDataSet;
+function TfrmKoreksiStok3.GetCDS: TClientDataSet;
 begin
   If not Assigned(FCDS) then
   begin
@@ -444,7 +468,22 @@ begin
   Result := FCDS;
 end;
 
-function TfrmKoreksiStok2.GetCDSGudang: TClientDataset;
+function TfrmKoreksiStok3.GetCDS2: TClientDataSet;
+begin
+  If not Assigned(FCDS2) then
+  begin
+    FCDS2 := TClientDataSet.Create(Self);
+    zAddField(FCDS2, 'No', ftInteger, False);
+    zAddField(FCDS2, 'Memo', ftString, False,255);
+    zAddField(FCDS2, 'QTY', ftFloat, False);
+    zAddField(FCDS2, 'Idbatch', ftString, False,100);
+
+    FCDS2.CreateDataSet;
+  end;
+  Result := FCDS2;
+end;
+
+function TfrmKoreksiStok3.GetCDSGudang: TClientDataset;
 var s:String;
 begin
   If not Assigned(FCDSGudang) then
@@ -459,7 +498,7 @@ begin
 end;
 
 
- procedure TfrmKoreksiStok2.initViewSKU;
+ procedure TfrmKoreksiStok3.initViewSKU;
 var
   S: string;
 begin
@@ -484,12 +523,12 @@ begin
 
 end;
 
-procedure TfrmKoreksiStok2.cxButton8Click(Sender: TObject);
+procedure TfrmKoreksiStok3.cxButton8Click(Sender: TObject);
 begin
 Release;
 end;
 
-procedure TfrmKoreksiStok2.cxButton2Click(Sender: TObject);
+procedure TfrmKoreksiStok3.cxButton2Click(Sender: TObject);
 begin
   try
      If not cekdata then exit;
@@ -520,7 +559,7 @@ begin
     Release;
 end;
 
-procedure TfrmKoreksiStok2.cxButton1Click(Sender: TObject);
+procedure TfrmKoreksiStok3.cxButton1Click(Sender: TObject);
 begin
  try
       If not cekdata then exit;
@@ -551,7 +590,7 @@ begin
 end;
 
 
-function TfrmKoreksiStok2.cekdata:Boolean;
+function TfrmKoreksiStok3.cekdata:Boolean;
 var
   i:integer;
 begin
@@ -579,7 +618,7 @@ end;
 
 
 
-procedure TfrmKoreksiStok2.initgrid;
+procedure TfrmKoreksiStok3.initgrid;
 begin
   CDS.EmptyDataSet;
   CDS.Append;
@@ -588,18 +627,22 @@ begin
   CDS.FieldByName('nilai').asfloat  := 0;
   CDS.Post;
 
+  CDS2.EmptyDataSet;
+  CDS2.Append;
+  CDS2.FieldByName('Qty').asfloat  := 0;
+  CDS2.Post;
 end;
 
 
 
-procedure TfrmKoreksiStok2.HapusRecord1Click(Sender: TObject);
+procedure TfrmKoreksiStok3.HapusRecord1Click(Sender: TObject);
 begin
  If CDS.Eof then exit;
   CDS.Delete;
   If CDS.Eof then initgrid;
 end;
 
-procedure TfrmKoreksiStok2.clNoGetDisplayText(
+procedure TfrmKoreksiStok3.clNoGetDisplayText(
   Sender: TcxCustomGridTableItem; ARecord: TcxCustomGridRecord;
   var AText: String);
 begin
@@ -609,13 +652,13 @@ begin
   end;
 end;
 
-procedure TfrmKoreksiStok2.cxLookupGudangAsalPropertiesEditValueChanged(
+procedure TfrmKoreksiStok3.cxLookupGudangAsalPropertiesEditValueChanged(
   Sender: TObject);
 begin
 //initViewSKU;
 end;
 
-procedure TfrmKoreksiStok2.clQTYPropertiesEditValueChanged(
+procedure TfrmKoreksiStok3.clQTYPropertiesEditValueChanged(
   Sender: TObject);
   var
     i:integer;
@@ -636,14 +679,14 @@ begin
 
 end;
 
-procedure TfrmKoreksiStok2.clSKUPropertiesButtonClick(Sender: TObject;
+procedure TfrmKoreksiStok3.clSKUPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
 begin
  bantuansku;
 
 end;
 
-procedure TfrmKoreksiStok2.bantuansku;
+procedure TfrmKoreksiStok3.bantuansku;
   var
     s:string;
     tsql2,tsql:TMyQuery;
@@ -723,13 +766,13 @@ begin
   end;
 end;
 
-procedure TfrmKoreksiStok2.clSKUPropertiesEditValueChanged(
+procedure TfrmKoreksiStok3.clSKUPropertiesEditValueChanged(
   Sender: TObject);
 begin
    bantuansku
 end;
 
-procedure TfrmKoreksiStok2.edtKodeBarangClickBtn(Sender: TObject);
+procedure TfrmKoreksiStok3.edtKodeBarangClickBtn(Sender: TObject);
 var
   s:String;
   tsql:TMyQuery;
@@ -749,13 +792,14 @@ begin
    end;
 end;
 
-procedure TfrmKoreksiStok2.Button4Click(Sender: TObject);
+procedure TfrmKoreksiStok3.Button4Click(Sender: TObject);
 var
   s:string;
   tsql:TMyQuery;
   aqty : double;
 begin
-  aqty := strtofloat(edtqty.Text);
+//  aqty := strtofloat(edtqty.Text);
+aqty := 0;
 s:='select  brg_kode,brg_nama,brg_satuan,bk_qty,brg_lastcost ,'
       + ' (select sum(mst_stok_in-mst_stok_out) from tmasterstok where mst_brg_kode=bk_bhn_kode) sistem '
       + ' ,brg_gdg_default,gdg_nama from tbarangkomposisi inner join tbarang on brg_kode=bk_bhn_kode '
@@ -790,7 +834,7 @@ s:='select  brg_kode,brg_nama,brg_satuan,bk_qty,brg_lastcost ,'
       end;
 end;
 
-procedure TfrmKoreksiStok2.clGudangPropertiesButtonClick(Sender: TObject;
+procedure TfrmKoreksiStok3.clGudangPropertiesButtonClick(Sender: TObject;
   AButtonIndex: Integer);
   var
     s:string;
@@ -814,7 +858,184 @@ begin
 
 end;
 
-procedure TfrmKoreksiStok2.prosesnonbahan(aqty:Double);
+procedure TfrmKoreksiStok3.Button5Click(Sender: TObject);
+var
+  s:String ;
+  tsql :TMyQuery;
+  aqty,aharga : double ;
+begin
+//   aqty := strtofloat(edtqty.Text);
+aqty := 0;
+   aharga := cVarToFloat(TcxDBGridHelper(cxGrdMain).GetFooterSummary('nilai'))/aqty*-1;
+  s:='select brg_kode,brg_nama,brg_satuan,ifnull(sum(mst_stok_in-mst_stok_out),0) Stok,brg_gdg_default,gdg_nama '
+  + '  from tbarang left join tmasterstok on mst_brg_kode=brg_kode and mst_gdg_kode=brg_gdg_default'
+  + ' left join tgudang on gdg_kode=brg_gdg_default '
+  + ' where brg_kode = '+ Quot(edtKodeBarang.Text)
+  + '  group by brg_kode ' ;
+  tsql := xOpenQuery(s,frmmenu.conn);
+  with tsql do
+  begin
+    try
+               cds.Append;
+              CDS.FieldByName('SKU').AsString := Fields[0].AsString;
+              CDS.FieldByName('NamaBarang').AsString := Fields[1].AsString;
+              CDS.FieldByName('Satuan').AsString := Fields[2].AsString;
+              CDS.FieldByName('FISIK').asfloat :=Fields[3].Asfloat+aqty;
+              CDS.FieldByName('system').asfloat :=Fields[3].Asfloat;
+              CDS.FieldByName('qTY').asfloat :=aqty;
+              CDS.FieldByName('harga').asfloat :=aharga;
+              CDS.FieldByName('NILAI').asfloat :=aharga*aqty;
+              CDS.FieldByName('gudang').AsString := Fields[4].AsString;
+              CDS.FieldByName('namagudang').AsString := Fields[5].AsString;
+              CDS.FieldByName('expired').asdatetime := dtExpired.Date;
+
+              CDS.Post;
+    finally
+      free;
+    end;
+
+  end;
+
+end;
+
+procedure TfrmKoreksiStok3.clQtyKoreksiPropertiesEditValueChanged(
+  Sender: TObject);
+ var
+    i:integer;
+    lVal : double;
+begin
+ If CDS.State <> dsEdit then
+   CDS.Edit;
+  cxGrdMain.DataController.Post;
+   i := cxGrdMain.DataController.FocusedRecordIndex;
+
+  cxGrdMain.DataController.Values[i, clfisik.Index]:=  cxGrdMain.DataController.Values[i, clQTYkoreksi.Index] +cxGrdMain.DataController.Values[i, clstoksystem.Index];
+  lVal := cxGrdMain.DataController.Values[i, clQTYkoreksi.Index] *  cxGrdMain.DataController.Values[i, clHarga.Index];
+
+  If CDS.State <> dsEdit then CDS.Edit;
+   CDS.FieldByName('fisik').AsFloat := cxGrdMain.DataController.Values[i, clQTYkoreksi.Index]+cxGrdMain.DataController.Values[i, clstoksystem.Index];
+  CDS.FieldByName('nilai').AsFloat := lVal;
+  CDS.Post;
+
+end ;
+procedure TfrmKoreksiStok3.cxGridDBTableView1CellDblClick(
+  Sender: TcxCustomGridTableView;
+  ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+  AShift: TShiftState; var AHandled: Boolean);
+var
+    s:string;
+    tsql:TmyQuery;
+    i:Integer;
+    aqty, aharga: double;
+begin
+  if cxGridDBTableView1.DataController.FocusedRecordIndex >= 0 then
+  begin
+    tampildetail(CDS2.FieldByName('Qty').AsFloat);
+  end;
+end;
+
+procedure TfrmKoreksiStok3.tampildetail(aqty:Double);
+var
+    s:string;
+    tsql:TmyQuery;
+    i:Integer;
+    aharga: double;
+begin
+  if cxGridDBTableView1.DataController.FocusedRecordIndex >= 0 then
+  begin
+//      aqty := CDS2.FieldByName('Qty').AsFloat;
+      s:='select  brg_kode,brg_nama,brg_satuan,bk_qty,brg_lastcost ,'
+      + ' (select sum(mst_stok_in-mst_stok_out) from tmasterstok where mst_brg_kode=bk_bhn_kode) sistem '
+      + ' ,brg_gdg_default,gdg_nama from tbarangkomposisi inner join tbarang on brg_kode=bk_bhn_kode '
+      + ' left join tgudang on gdg_kode=brg_gdg_default'
+      + ' where bk_brg_kode='+ Quot(edtkodebarang.text);
+      tsql:= xOpenQuery(s,frmmenu.conn);
+      with tsql do
+      begin
+        try
+          if not eof then
+             cds.EmptyDataSet;
+          while not eof do
+          begin
+              cds.Append;
+              CDS.FieldByName('SKU').AsString := Fields[0].AsString;
+              CDS.FieldByName('NamaBarang').AsString := Fields[1].AsString;
+              CDS.FieldByName('Satuan').AsString := Fields[2].AsString;
+              CDS.FieldByName('FISIK').asfloat :=(Fields[5].Asfloat-(Fields[3].Asfloat*aqty));
+              CDS.FieldByName('system').asfloat :=Fields[5].Asfloat;
+              CDS.FieldByName('qTY').asfloat :=Fields[3].Asfloat*-1*aqty;
+              CDS.FieldByName('harga').asfloat :=Fields[4].Asfloat;
+              CDS.FieldByName('NILAI').asfloat :=Fields[4].Asfloat*-1*Fields[3].Asfloat*aqty;
+              CDS.FieldByName('gudang').AsString := Fields[6].AsString;
+              CDS.FieldByName('namagudang').AsString := Fields[7].AsString;
+              CDS.Post;
+
+            next;
+          end;
+        finally
+          free;
+        end;
+      end;
+
+      aharga := cVarToFloat(TcxDBGridHelper(cxGrdMain).GetFooterSummary('nilai'))/aqty*-1;
+      s:='select brg_kode,brg_nama,brg_satuan,ifnull(sum(mst_stok_in-mst_stok_out),0) Stok,brg_gdg_default,gdg_nama '
+      + '  from tbarang left join tmasterstok on mst_brg_kode=brg_kode and mst_gdg_kode=brg_gdg_default'
+      + ' left join tgudang on gdg_kode=brg_gdg_default '
+      + ' where brg_kode = '+ Quot(edtKodeBarang.Text)
+      + '  group by brg_kode ' ;
+      tsql := xOpenQuery(s,frmmenu.conn);
+      with tsql do
+      begin
+        try
+           cds.Append;
+          CDS.FieldByName('SKU').AsString := Fields[0].AsString;
+          CDS.FieldByName('NamaBarang').AsString := Fields[1].AsString;
+          CDS.FieldByName('Satuan').AsString := Fields[2].AsString;
+          CDS.FieldByName('FISIK').asfloat :=Fields[3].Asfloat+aqty;
+          CDS.FieldByName('system').asfloat :=Fields[3].Asfloat;
+          CDS.FieldByName('qTY').asfloat :=aqty;
+          CDS.FieldByName('harga').asfloat :=aharga;
+          CDS.FieldByName('NILAI').asfloat :=aharga*aqty;
+          CDS.FieldByName('gudang').AsString := Fields[4].AsString;
+          CDS.FieldByName('namagudang').AsString := Fields[5].AsString;
+          CDS.FieldByName('expired').asdatetime := dtExpired.Date;
+
+          CDS.Post;
+        finally
+          free;
+        end;
+
+      end;
+  end;
+end;
+
+procedure TfrmKoreksiStok3.Button6Click(Sender: TObject);
+var
+  idbatch: String;
+  i: Integer;
+begin
+  CDS2.First;
+  i := 0;
+
+  while not CDS2.Eof do
+  begin
+    if i = 0 then
+    begin
+      idbatch := CDS2.fieldbyname('Idbatch').AsString;
+    end
+    else
+    begin
+      CDS2.Edit;
+      CDS2.fieldbyname('Idbatch').AsString  := idbatch;
+      CDS2.Post;
+    end;
+
+    CDS2.next;
+    Inc(i);
+  end;
+end;
+
+procedure TfrmKoreksiStok3.prosesnonbahan(aqty:Double);
 var
     s:string;
     tsql:TmyQuery;
@@ -848,63 +1069,4 @@ begin
       end;
 end;
 
-procedure TfrmKoreksiStok2.Button5Click(Sender: TObject);
-var
-  s:String ;
-  tsql :TMyQuery;
-  aqty,aharga : double ;
-begin
-   aqty := strtofloat(edtqty.Text);
-   aharga := cVarToFloat(TcxDBGridHelper(cxGrdMain).GetFooterSummary('nilai'))/aqty*-1;
-  s:='select brg_kode,brg_nama,brg_satuan,ifnull(sum(mst_stok_in-mst_stok_out),0) Stok,brg_gdg_default,gdg_nama '
-  + '  from tbarang left join tmasterstok on mst_brg_kode=brg_kode and mst_gdg_kode=brg_gdg_default'
-  + ' left join tgudang on gdg_kode=brg_gdg_default '
-  + ' where brg_kode = '+ Quot(edtKodeBarang.Text)
-  + '  group by brg_kode ' ;
-  tsql := xOpenQuery(s,frmmenu.conn);
-  with tsql do
-  begin
-    try
-               cds.Append;
-              CDS.FieldByName('SKU').AsString := Fields[0].AsString;
-              CDS.FieldByName('NamaBarang').AsString := Fields[1].AsString;
-              CDS.FieldByName('Satuan').AsString := Fields[2].AsString;
-              CDS.FieldByName('FISIK').asfloat :=Fields[3].Asfloat+aqty;
-              CDS.FieldByName('system').asfloat :=Fields[3].Asfloat;
-              CDS.FieldByName('qTY').asfloat :=aqty;
-              CDS.FieldByName('harga').asfloat :=aharga;
-              CDS.FieldByName('NILAI').asfloat :=aharga*aqty;
-              CDS.FieldByName('gudang').AsString := Fields[4].AsString;
-              CDS.FieldByName('namagudang').AsString := Fields[5].AsString;
-              CDS.FieldByName('expired').asdatetime := dtExpired.Date;
-
-              CDS.Post;
-    finally
-      free;
-    end;
-
-  end;
-
-end;
-
-procedure TfrmKoreksiStok2.clQtyKoreksiPropertiesEditValueChanged(
-  Sender: TObject);
- var
-    i:integer;
-    lVal : double;
-begin
- If CDS.State <> dsEdit then
-   CDS.Edit;
-  cxGrdMain.DataController.Post;
-   i := cxGrdMain.DataController.FocusedRecordIndex;
-
-  cxGrdMain.DataController.Values[i, clfisik.Index]:=  cxGrdMain.DataController.Values[i, clQTYkoreksi.Index] +cxGrdMain.DataController.Values[i, clstoksystem.Index];
-  lVal := cxGrdMain.DataController.Values[i, clQTYkoreksi.Index] *  cxGrdMain.DataController.Values[i, clHarga.Index];
-
-  If CDS.State <> dsEdit then CDS.Edit;
-   CDS.FieldByName('fisik').AsFloat := cxGrdMain.DataController.Values[i, clQTYkoreksi.Index]+cxGrdMain.DataController.Values[i, clstoksystem.Index];
-  CDS.FieldByName('nilai').AsFloat := lVal;
-  CDS.Post;
-
-end ;
 end.

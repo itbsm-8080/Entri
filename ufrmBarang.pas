@@ -12,7 +12,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, DB, cxDBData, cxSpinEdit,
   cxCurrencyEdit, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, cxButtonEdit,
-  MyAccess;
+  MyAccess, cxGridExportLink;
 
 type
   TfrmBarang = class(TForm)
@@ -70,6 +70,26 @@ type
     lvMaster: TcxGridLevel;
     PopupMenu1: TPopupMenu;
     HapusRecord1: TMenuItem;
+    btn1: TButton;
+    dlgSavesavedlg: TSaveDialog;
+    cxgrdbclmnGridDBTableView1Column2: TcxGridDBColumn;
+    Label14: TLabel;
+    edtMinStok: TAdvEdit;
+    edtMaxStok: TAdvEdit;
+    Label15: TLabel;
+    Label11: TLabel;
+    edtSpesifikasi: TAdvEdit;
+    clSupplier: TcxGridDBColumn;
+    TabSheet1: TTabSheet;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView3: TcxGridDBTableView;
+    cxGridDBTableView4: TcxGridDBTableView;
+    cxGridLevel2: TcxGridLevel;
+    clNo2: TcxGridDBColumn;
+    clKeterangan2: TcxGridDBColumn;
+    clQty2: TcxGridDBColumn;
+    clSatuan2: TcxGridDBColumn;
+    clJumlah2: TcxGridDBColumn;
     procedure clNoGetDisplayText(Sender: TcxCustomGridTableItem; ARecord:
         TcxCustomGridRecord; var AText: string);
     procedure refreshdata;
@@ -87,6 +107,9 @@ type
     procedure cxGridDBColumn2PropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure HapusRecord1Click(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
+    procedure clNo2GetDisplayText(Sender: TcxCustomGridTableItem;
+      ARecord: TcxCustomGridRecord; var AText: String);
 
   private
     FCDSJenisGroup: TClientDataset;
@@ -101,16 +124,19 @@ type
     function GetCDSGudang: TClientDataset;
     function GetCDS: TClientDataSet;
     function GetCDS2: TClientDataSet;
+    function GetCDS3: TClientDataSet;
     procedure initgrid;
 
        protected
     FCDS: TClientDataSet;
     FCDS2: TClientDataSet;
+    FCDS3: TClientDataSet;
 
     { Private declarations }
   public
     property CDS: TClientDataSet read GetCDS write FCDS;
     property CDS2: TClientDataSet read GetCDS2 write FCDS2;
+    property CDS3: TClientDataSet read GetCDS3 write FCDS3;
     property CDSJenisGroup: TClientDataset read GetCDSJenisGroup write
         FCDSJenisGroup;
     property CDSSupplier: TClientDataset read GetCDSSupplier write FCDSSupplier;
@@ -207,7 +233,7 @@ var
   s: string;
   tsql : TMyQuery;
 begin
-  s:= 'select *  from tbarang where brg_kode = ' + Quot(akode) ;
+  s:= 'select * from tbarang where brg_kode = ' + Quot(akode) ;
 tsql := xOpenQuery(s,frmMenu.conn);
 with tsql do
 begin
@@ -231,6 +257,8 @@ begin
       if fieldbyname('brg_isexpired').AsString = '1' then
           chkExpired.Checked :=True ;
 
+      edtSpesifikasi.Text := fieldbyname('brg_spesifikasi').AsString;
+
       FID :=fieldbyname('brg_kode').Asstring;
 
     end
@@ -244,7 +272,6 @@ begin
 end;
 
 end;
-
 
 procedure TfrmBarang.simpandata;
 var
@@ -267,10 +294,12 @@ begin
      isstok := 1
   else
      isstok := 0;
+
   if chkExpired.Checked then
      isexpired:=1
   else
      isexpired := 0;
+
 if FLAGEDIT then
   s:='update tbarang set '
     + ' brg_nama = ' + Quot(edtNama.Text) + ','
@@ -286,6 +315,9 @@ if FLAGEDIT then
     + ' brg_isstok = ' + IntToStr(isstok) + ','
     + ' brg_isproductfocus = ' + IntToStr(isprodukfocus) + ','
     + ' brg_isexpired = ' + IntToStr(isexpired) + ','
+    + ' brg_min_stok = ' + StringReplace(edtMinStok.Text,',','',[rfReplaceAll])+','
+    + ' brg_max_stok = ' + StringReplace(edtMaxStok.Text,',','',[rfReplaceAll])+','
+    + ' brg_spesifikasi = '+ Quot(edtSpesifikasi.Text)+','
     + ' date_modified  = ' + QuotD(cGetServerTime,True) + ','
     + ' user_modified = ' + Quot(frmMenu.KDUSER)
     + ' where brg_kode = ' + quot(FID) + ';'
@@ -294,7 +326,7 @@ begin
 
   s :=  ' insert into tbarang '
              + ' (brg_kode,brg_nama,brg_satuan,brg_gr_kode,brg_ktg_kode,brg_gdg_DEFAULT,brg_sup_kode ,brg_merk,'
-             + ' brg_hrgjual,brg_hrgbeli,brg_lastcost,brg_isaktif,brg_isstok,brg_isexpired,brg_isproductfocus,date_create,user_create'
+             + ' brg_hrgjual,brg_hrgbeli,brg_lastcost,brg_isaktif,brg_isstok,brg_isexpired,brg_min_stok,brg_max_stok,brg_spesifikasi,brg_isproductfocus,date_create,user_create'
              + ' ) '
              + ' values ( '
              + Quot(edtKode.Text) + ','
@@ -311,7 +343,10 @@ begin
              + IntToStr(isaktif) + ','
              + IntToStr(isstok)+ ','
              + IntToStr(isexpired)+ ','
-             + IntToStr(isprodukfocus)+ ','             
+             + StringReplace(edtMinStok.Text,',','',[rfReplaceAll]) + ','
+             + StringReplace(edtMaxStok.Text,',','',[rfReplaceAll]) + ','
+             + Quot(edtSpesifikasi.Text) + ','
+             + IntToStr(isprodukfocus)+ ','
               + QuotD(cGetServerTime,True) + ','
              + Quot(frmMenu.KDUSER)+')';
 end;
@@ -352,18 +387,55 @@ ExecSQLDirect(frmMenu.conn, s);
   begin
    if CDS2.FieldByName('qty').AsFloat >  0 then
    begin
-    S:='insert into tbarangkomposisi (bk_brg_kode,bk_bhn_kode,bk_qty,bk_satuan,bk_nourut) values ('
+    S:='insert into tbarangkomposisi (bk_brg_kode,bk_bhn_kode,bk_qty,bk_satuan,bk_nourut, bk_spesifikasi) values ('
       + Quot(edtKode.Text) +','
       + IntToStr(CDS2.FieldByName('kode').AsInteger) +','
       + floatToStr(CDS2.FieldByName('qty').Asfloat)+','
       + Quot(CDS2.FieldByName('satuan').asstring)+','
-      + inttostr(i)
+      + inttostr(i)+','
+      + Quot(CDS2.FieldByName('spesifikasi').asstring)
       + ');';
     tt.Append(s);
    end;
     CDS2.Next;
     Inc(i);
   end;
+
+  try
+        for i:=0 to tt.Count -1 do
+        begin
+            // xExecQuery(tt[i],frmMenu.conn);
+            EnsureConnected(frmMenu.conn);
+            ExecSQLDirect(frmMenu.conn, tt[i]);
+        end;
+      finally
+        tt.Free;
+      end;
+
+    tt := TStringList.Create;
+    s:= 'delete from tnonbahanbaku '
+      + ' where nbb_brg_kode = ' + quot(FID);
+    tt.Append(s);
+
+    CDS3.First;
+    i:=1;
+    while not CDS3.Eof do
+    begin
+    if CDS3.FieldByName('Qty').AsFloat >  0 then
+    begin
+      S:='insert into tnonbahanbaku(nbb_brg_kode, nbb_keterangan, nbb_qty, nbb_satuan, nbb_nourut, nbb_jumlah) values ('
+      + Quot(edtKode.Text) +','
+      + Quot(CDS3.FieldByName('Keterangan').asstring)+','
+      + floatToStr(CDS3.FieldByName('Qty').Asfloat)+','
+      + Quot(CDS3.FieldByName('Satuan').asstring)+','
+      + inttostr(i)+','
+      + floatToStr(CDS3.FieldByName('Jumlah').Asfloat)
+      + ');';
+      tt.Append(s);
+    end;
+      CDS3.Next;
+      Inc(i);
+    end;
 
      try
         for i:=0 to tt.Count -1 do
@@ -375,7 +447,6 @@ ExecSQLDirect(frmMenu.conn, s);
       finally
         tt.Free;
       end;
-
 end;
 
 
@@ -465,7 +536,7 @@ begin
     LoadFromCDS(CDSKategori, 'Kode','Nama',['Kode'],Self);
    TcxDBGridHelper(cxGrdMain).LoadFromCDS(CDS, False, False);
    TcxDBGridHelper(cxGridDBTableView1).LoadFromCDS(CDS2, False, False);
-
+   TcxDBGridHelper(cxGridDBTableView3).LoadFromCDS(CDS3, False, False);
 end;
 
 function TfrmBarang.GetCDSJenisGroup: TClientDataset;
@@ -568,9 +639,26 @@ begin
     zAddField(FCDS2, 'nama', ftstring, False,30);
     zAddField(FCDS2, 'Qty', ftfloat, False);
     zAddField(FCDS2, 'satuan', ftstring, False,30);
+    zAddField(FCDS2, 'spesifikasi', ftstring, False,100);
+    zAddField(FCDS2, 'Supplier', ftstring, False,200);
     FCDS2.CreateDataSet;
   end;
   Result := FCDS2
+end;
+
+function TfrmBarang.GetCDS3: TClientDataSet;
+begin
+  If not Assigned(FCDS3) then
+  begin
+    FCDS3 := TClientDataSet.Create(Self);
+    zAddField(FCDS3, 'No', ftInteger, False);
+    zAddField(FCDS3, 'Keterangan', ftstring, False,150);
+    zAddField(FCDS3, 'Qty', ftfloat, False);
+    zAddField(FCDS3, 'Satuan', ftstring, False,60);
+    zAddField(FCDS3, 'Jumlah', ftfloat, False);
+    FCDS3.CreateDataSet;
+  end;
+  Result := FCDS3
 end;
 
 procedure TfrmBarang.initgrid;
@@ -602,7 +690,9 @@ begin
  end;
 
  cds2.EmptyDataSet;
-   s:=' select bk_bhn_kode,brg_nama ,bk_qty,bk_satuan from tbarangkomposisi inner join '
+   s:=' select bk_bhn_kode,brg_nama ,bk_qty,bk_satuan, bk_spesifikasi, '
+     + ' (SELECT Sup_nama FROM tsupplier WHERE Sup_kode = brg_sup_kode) Supplier '
+     + '  from tbarangkomposisi inner join '
      + ' tbarang on brg_kode=bk_bhn_kode '
      + ' where bk_brg_kode='+ Quot(edtKode.Text)
      + ' order by bk_nourut ';
@@ -618,8 +708,33 @@ begin
         CDS2.FieldByName('nama').AsString     := Fields[1].AsString;
         CDS2.FieldByName('qty').AsFloat       := Fields[2].AsFloat;
         CDS2.FieldByName('satuan').AsString   := Fields[3].AsString;
-
+        CDS2.FieldByName('spesifikasi').AsString := Fields[4].AsString;
+        CDS2.FieldByName('Supplier').AsString := Fields[5].AsString;
         CDS2.Post;
+
+       Next;
+     end;
+   finally
+     free;
+   end;
+ end;
+
+ CDS3.EmptyDataSet;
+   s:=' SELECT * FROM tnonbahanbaku WHERE nbb_brg_kode = '+ Quot(edtKode.Text)
+     + ' order by nbb_nourut ';
+
+ tsql := xOpenQuery(s,frmMenu.conn) ;
+ with tsql do
+ begin
+   try
+     while not Eof do
+     begin
+        CDS3.Append;
+        CDS3.FieldByName('Keterangan').AsString    := Fields[1].AsString;
+        CDS3.FieldByName('Qty').AsFloat       := Fields[2].AsFloat;
+        CDS3.FieldByName('Satuan').AsString   := Fields[3].AsString;
+        CDS3.FieldByName('Jumlah').AsFloat     := Fields[5].AsFloat;
+        CDS3.Post;
 
        Next;
      end;
@@ -643,7 +758,7 @@ begin
   frmBantuan.ShowModal;
    if varglobal <> '' then
    begin
-     s:='select brg_kode,brg_nama,brg_satuan from tbarang where brg_kode='+quot(varglobal);
+     s:='select brg_kode,brg_nama,brg_satuan,brg_spesifikasi,(SELECT Sup_nama FROM tsupplier WHERE Sup_kode = brg_sup_kode) Supplier from tbarang where brg_kode='+quot(varglobal);
      tsql := xOpenQuery(s,frmMenu.conn);
      with tsql do
      begin
@@ -653,7 +768,8 @@ begin
          CDS2.FieldByName('kode').AsString := Fields[0].AsString;
          CDS2.FieldByName('nama').AsString := Fields[1].AsString;
          CDS2.FieldByName('satuan').AsString := Fields[2].AsString;
-
+         CDS2.FieldByName('spesifikasi').AsString := Fields[3].AsString;
+         CDS2.FieldByName('Supplier').AsString := Fields[4].AsString;
        end;
      end;
    end;
@@ -664,6 +780,23 @@ begin
  If CDS2.Eof then exit;
   CDS2.Delete;
 
+end;
+
+procedure TfrmBarang.btn1Click(Sender: TObject);
+begin
+  if dlgSavesavedlg.Execute then
+  ExportGridToExcel(dlgSavesavedlg.FileName, cxGrid1,True,True,True);
+
+  cxGridDBTableView1.DataController.CollapseDetails;
+end;
+
+procedure TfrmBarang.clNo2GetDisplayText(Sender: TcxCustomGridTableItem;
+  ARecord: TcxCustomGridRecord; var AText: String);
+begin
+ If Assigned(ARecord) then
+  begin
+    AText := Inttostr(ARecord.Index+1);
+  end;
 end;
 
 end.

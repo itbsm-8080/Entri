@@ -22,12 +22,14 @@ uses
 type
   TfrmBrowseKoreksiStok = class(TfrmCxBrowse)
     cxButton5: TcxButton;
+    cxButton9: TcxButton;
   procedure btnRefreshClick(Sender: TObject);
   procedure FormShow(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
   procedure cxButton6Click(Sender: TObject);
     procedure cxButton3Click(Sender: TObject);
     procedure cxButton5Click(Sender: TObject);
+    procedure cxButton9Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,7 +40,7 @@ var
   frmBrowseKoreksiStok: TfrmBrowseKoreksiStok;
 
 implementation
-   uses ufrmKoreksiStok,ufrmKoreksiStok2,Ulib, MAIN, uModuleConnection;
+   uses ufrmKoreksiStok,ufrmKoreksiStok2,ufrmKoreksiStok3,Ulib, MAIN, uModuleConnection;
 {$R *.dfm}
 
 procedure TfrmBrowseKoreksiStok.btnRefreshClick(Sender: TObject);
@@ -58,8 +60,13 @@ begin
 
   Self.SQLMaster := 'select korh_nomor Nomor,korh_Tanggal Tanggal ,b.gdg_nama Gudang,'
                   + ' korh_notes Keterangan,korh_total Total,korh_idbatch Idbatch,korh_expired Expired,korh_produksi Produksi,korh_memo Memo,'
-                  + ' if (korh_notes="PRODUKSI",(SELECT kord_qty FROM tkor_dtl WHERE kord_korh_nomor =korh_nomor AND kord_qty > 0 limit 1),0) Qty_Produksi,user_create,date_create'
+                  + ' if (korh_notes="PRODUKSI",(SELECT kord_qty FROM tkor_dtl WHERE kord_korh_nomor =korh_nomor AND kord_qty > 0 limit 1),0) Qty_Produksi,'
+                  + ' ( SELECT brg_satuan FROM tkor_dtl '
+                  + ' INNER JOIN tbarang ON brg_kode = KORD_BRG_KODE '
+                  + ' WHERE KORD_KORH_NOMOR = korh_nomor AND kord_gdg_kode LIKE "%GJ%" '
+                  + ' ORDER BY kord_nourut DESC LIMIT 1 ) Satuan '
                   + afieldnilai
+                  + ',user_create,date_create '
                   + ' from tkor_hdr  a '
                   + ' left join  tgudang b on b.gdg_kode=a.korh_gdg_kode '
                   + ' where korh_tanggal between ' + QuotD(startdate.DateTime) + ' and ' + QuotD(enddate.DateTime)
@@ -89,8 +96,8 @@ begin
     cxGrdMaster.Columns[4].Summary.FooterFormat:='###,###,###,###';
     if UpperCase(frmMenu.KDUSER) ='FINANCE' then
     BEGIN
-    cxGrdMaster.Columns[12].Summary.FooterKind:=skSum;
-    cxGrdMaster.Columns[12].Summary.FooterFormat:='###,###,###,###';
+    cxGrdMaster.Columns[11].Summary.FooterKind:=skSum;
+    cxGrdMaster.Columns[11].Summary.FooterFormat:='###,###,###,###';
     END;
 
 end;
@@ -139,6 +146,19 @@ begin
       frmKoreksiStok2.edtNomor.Text := frmKoreksiStok2.getmaxkode;
    end;
    frmKoreksiStok2.Show;
+end;
+
+procedure TfrmBrowseKoreksiStok.cxButton9Click(Sender: TObject);
+var
+  frmKoreksiStok3: TfrmKoreksiStok3;
+begin
+  inherited;
+  if ActiveMDIChild.Caption <> 'Produksi' then
+   begin
+      frmkoreksiStok3  := frmmenu.ShowForm(TfrmKoreksiStok3) as TfrmKoreksiStok3;
+      frmKoreksiStok3.edtNomor.Text := frmKoreksiStok3.getmaxkode;
+   end;
+   frmKoreksiStok3.Show;
 end;
 
 end.

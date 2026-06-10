@@ -1,8 +1,8 @@
 object frmBarang: TfrmBarang
-  Left = 441
-  Top = 146
-  Width = 676
-  Height = 582
+  Left = 359
+  Top = 127
+  Width = 725
+  Height = 611
   Caption = 'Master Barang dan Jasa'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -23,8 +23,8 @@ object frmBarang: TfrmBarang
   object AdvPanel1: TAdvPanel
     Left = 0
     Top = 41
-    Width = 660
-    Height = 288
+    Width = 709
+    Height = 304
     Align = alTop
     BevelInner = bvRaised
     Color = clWhite
@@ -163,6 +163,27 @@ object frmBarang: TfrmBarang
       Width = 23
       Height = 13
       Caption = 'Merk'
+    end
+    object Label14: TLabel
+      Left = 314
+      Top = 202
+      Width = 40
+      Height = 13
+      Caption = 'Min Stok'
+    end
+    object Label15: TLabel
+      Left = 314
+      Top = 224
+      Width = 44
+      Height = 13
+      Caption = 'Max Stok'
+    end
+    object Label11: TLabel
+      Left = 26
+      Top = 273
+      Width = 49
+      Height = 13
+      Caption = 'Spesifikasi'
     end
     object edtKode: TAdvEdit
       Left = 127
@@ -632,11 +653,205 @@ object frmBarang: TfrmBarang
       TabOrder = 13
       Visible = False
     end
+    object btn1: TButton
+      Left = 478
+      Top = 265
+      Width = 108
+      Height = 25
+      Caption = 'Export Excel'
+      TabOrder = 14
+      OnClick = btn1Click
+    end
+    object edtMinStok: TAdvEdit
+      Left = 375
+      Top = 198
+      Width = 54
+      Height = 21
+      AutoFocus = False
+      EditAlign = eaRight
+      EditType = etMoney
+      ErrorMarkerPos = 0
+      ErrorMarkerLen = 0
+      ErrorColor = clRed
+      ErrorFontColor = clWhite
+      ExcelStyleDecimalSeparator = False
+      Flat = False
+      FlatLineColor = clBlack
+      FlatParentColor = True
+      FocusAlign = eaDefault
+      FocusBorder = False
+      FocusColor = clWhite
+      FocusFontColor = clWindowText
+      FocusLabel = False
+      FocusWidthInc = 0
+      ModifiedColor = clHighlight
+      DisabledColor = clSilver
+      URLColor = clBlue
+      ReturnIsTab = False
+      LengthLimit = 0
+      TabOnFullLength = False
+      Precision = 0
+      LabelPosition = lpLeftTop
+      LabelMargin = 4
+      LabelTransparent = False
+      LabelAlwaysEnabled = False
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.CaseSensitive = False
+      Lookup.Color = clWindow
+      Lookup.DisplayCount = 4
+      Lookup.Enabled = False
+      Lookup.History = False
+      Lookup.NumChars = 2
+      Lookup.Multi = False
+      Lookup.Separator = ';'
+      Persistence.Enable = False
+      Persistence.Location = plInifile
+      Color = clWhite
+      Enabled = True
+      HintShowLargeText = False
+      MaxLength = 20
+      OleDropTarget = False
+      OleDropSource = False
+      Signed = False
+      TabOrder = 15
+      Text = '0'
+      Transparent = False
+      Visible = True
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object edtMaxStok: TAdvEdit
+      Left = 375
+      Top = 220
+      Width = 54
+      Height = 21
+      AutoFocus = False
+      EditAlign = eaRight
+      EditType = etMoney
+      ErrorMarkerPos = 0
+      ErrorMarkerLen = 0
+      ErrorColor = clRed
+      ErrorFontColor = clWhite
+      ExcelStyleDecimalSeparator = False
+      Flat = False
+      FlatLineColor = clBlack
+      FlatParentColor = True
+      FocusAlign = eaDefault
+      FocusBorder = False
+      FocusColor = clWhite
+      FocusFontColor = clWindowText
+      FocusLabel = False
+      FocusWidthInc = 0
+      ModifiedColor = clHighlight
+      DisabledColor = clSilver
+      URLColor = clBlue
+      ReturnIsTab = False
+      LengthLimit = 0
+      TabOnFullLength = False
+      Precision = 0
+      LabelPosition = lpLeftTop
+      LabelMargin = 4
+      LabelTransparent = False
+      LabelAlwaysEnabled = False
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.CaseSensitive = False
+      Lookup.Color = clWindow
+      Lookup.DisplayCount = 4
+      Lookup.Enabled = False
+      Lookup.History = False
+      Lookup.NumChars = 2
+      Lookup.Multi = False
+      Lookup.Separator = ';'
+      Persistence.Enable = False
+      Persistence.Location = plInifile
+      Color = clWhite
+      Enabled = True
+      HintShowLargeText = False
+      MaxLength = 20
+      OleDropTarget = False
+      OleDropSource = False
+      Signed = False
+      TabOrder = 16
+      Text = '0'
+      Transparent = False
+      Visible = True
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object edtSpesifikasi: TAdvEdit
+      Left = 127
+      Top = 269
+      Width = 322
+      Height = 21
+      AutoFocus = False
+      EditAlign = eaLeft
+      EditType = etString
+      ErrorMarkerPos = 0
+      ErrorMarkerLen = 0
+      ErrorColor = clRed
+      ErrorFontColor = clWhite
+      ExcelStyleDecimalSeparator = False
+      Flat = False
+      FlatLineColor = clBlack
+      FlatParentColor = True
+      FocusAlign = eaDefault
+      FocusBorder = False
+      FocusColor = clWhite
+      FocusFontColor = clWindowText
+      FocusLabel = False
+      FocusWidthInc = 0
+      ModifiedColor = clHighlight
+      DisabledColor = clSilver
+      URLColor = clBlue
+      ReturnIsTab = False
+      LengthLimit = 0
+      TabOnFullLength = False
+      Precision = 0
+      LabelPosition = lpLeftTop
+      LabelMargin = 4
+      LabelTransparent = False
+      LabelAlwaysEnabled = False
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.CaseSensitive = False
+      Lookup.Color = clWindow
+      Lookup.DisplayCount = 4
+      Lookup.Enabled = False
+      Lookup.History = False
+      Lookup.NumChars = 2
+      Lookup.Multi = False
+      Lookup.Separator = ';'
+      Persistence.Enable = False
+      Persistence.Location = plInifile
+      Color = clWhite
+      Enabled = True
+      HintShowLargeText = False
+      MaxLength = 99999
+      OleDropTarget = False
+      OleDropSource = False
+      Signed = False
+      TabOrder = 17
+      Transparent = False
+      Visible = True
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
   end
   object AdvPanel3: TAdvPanel
     Left = 0
-    Top = 508
-    Width = 660
+    Top = 537
+    Width = 709
     Height = 35
     Align = alBottom
     BevelInner = bvRaised
@@ -701,7 +916,7 @@ object frmBarang: TfrmBarang
     URLColor = clBlue
     FullHeight = 0
     object cxButton8: TcxButton
-      Left = 571
+      Left = 620
       Top = 2
       Width = 87
       Height = 31
@@ -845,7 +1060,7 @@ object frmBarang: TfrmBarang
   object AdvPanel2: TAdvPanel
     Left = 0
     Top = 0
-    Width = 660
+    Width = 709
     Height = 41
     Align = alTop
     BevelInner = bvRaised
@@ -925,9 +1140,9 @@ object frmBarang: TfrmBarang
   end
   object AdvPanel4: TAdvPanel
     Left = 0
-    Top = 329
-    Width = 660
-    Height = 179
+    Top = 345
+    Width = 709
+    Height = 192
     Align = alClient
     BevelInner = bvRaised
     TabOrder = 3
@@ -992,8 +1207,8 @@ object frmBarang: TfrmBarang
     object PageControl1: TPageControl
       Left = 2
       Top = 2
-      Width = 656
-      Height = 175
+      Width = 705
+      Height = 188
       ActivePage = TabSheet2
       Align = alClient
       TabOrder = 0
@@ -1003,8 +1218,8 @@ object frmBarang: TfrmBarang
         object cxGrid1: TcxGrid
           Left = 0
           Top = 0
-          Width = 648
-          Height = 147
+          Width = 697
+          Height = 160
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -1077,9 +1292,7 @@ object frmBarang: TfrmBarang
             object cxGridDBColumn4: TcxGridDBColumn
               Caption = 'Qty'
               DataBinding.FieldName = 'qty'
-              PropertiesClassName = 'TcxCurrencyEditProperties'
-              Properties.DecimalPlaces = 5
-              Properties.DisplayFormat = ',0.00000;(,0.00000)'
+              PropertiesClassName = 'TcxSpinEditProperties'
               HeaderAlignmentHorz = taCenter
               HeaderAlignmentVert = vaCenter
               HeaderGlyphAlignmentHorz = taCenter
@@ -1088,6 +1301,23 @@ object frmBarang: TfrmBarang
             object cxGridDBTableView1Column1: TcxGridDBColumn
               Caption = 'Satuan'
               DataBinding.FieldName = 'satuan'
+            end
+            object cxgrdbclmnGridDBTableView1Column2: TcxGridDBColumn
+              Caption = 'Spesifikasi'
+              DataBinding.FieldName = 'spesifikasi'
+              PropertiesClassName = 'TcxTextEditProperties'
+              HeaderAlignmentHorz = taCenter
+              HeaderAlignmentVert = vaCenter
+              Width = 250
+            end
+            object clSupplier: TcxGridDBColumn
+              DataBinding.FieldName = 'Supplier'
+              PropertiesClassName = 'TcxTextEditProperties'
+              HeaderAlignmentHorz = taCenter
+              HeaderAlignmentVert = vaCenter
+              Options.Editing = False
+              Options.Focusing = False
+              Width = 250
             end
           end
           object cxGridDBTableView2: TcxGridDBTableView
@@ -1203,6 +1433,105 @@ object frmBarang: TfrmBarang
           end
         end
       end
+      object TabSheet1: TTabSheet
+        Caption = 'Biaya Non Bahan Baku'
+        ImageIndex = 1
+        object cxGrid2: TcxGrid
+          Left = 0
+          Top = 0
+          Width = 697
+          Height = 160
+          Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          LookAndFeel.Kind = lfUltraFlat
+          LookAndFeel.NativeStyle = False
+          object cxGridDBTableView3: TcxGridDBTableView
+            NavigatorButtons.ConfirmDelete = False
+            DataController.Filter.Options = [fcoCaseInsensitive]
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <
+              item
+              end
+              item
+                Format = ',0;(,0)'
+                Kind = skSum
+              end>
+            DataController.Summary.SummaryGroups = <>
+            FilterRow.ApplyChanges = fracImmediately
+            OptionsBehavior.GoToNextCellOnEnter = True
+            OptionsBehavior.FocusCellOnCycle = True
+            OptionsCustomize.ColumnHiding = True
+            OptionsCustomize.ColumnSorting = False
+            OptionsData.Appending = True
+            OptionsData.CancelOnExit = False
+            OptionsData.Deleting = False
+            OptionsData.DeletingConfirmation = False
+            OptionsView.GroupByBox = False
+            OptionsView.HeaderHeight = 23
+            object clNo2: TcxGridDBColumn
+              DataBinding.FieldName = 'No'
+              PropertiesClassName = 'TcxSpinEditProperties'
+              OnGetDisplayText = clNo2GetDisplayText
+              HeaderAlignmentHorz = taCenter
+              HeaderAlignmentVert = vaCenter
+              Options.Editing = False
+              Options.Focusing = False
+              Width = 36
+            end
+            object clKeterangan2: TcxGridDBColumn
+              DataBinding.FieldName = 'Keterangan'
+              PropertiesClassName = 'TcxTextEditProperties'
+              HeaderAlignmentHorz = taCenter
+              HeaderAlignmentVert = vaCenter
+              Width = 250
+            end
+            object clQty2: TcxGridDBColumn
+              DataBinding.FieldName = 'Qty'
+              PropertiesClassName = 'TcxSpinEditProperties'
+              HeaderAlignmentHorz = taCenter
+              HeaderAlignmentVert = vaCenter
+              Width = 90
+            end
+            object clSatuan2: TcxGridDBColumn
+              DataBinding.FieldName = 'Satuan'
+              PropertiesClassName = 'TcxTextEditProperties'
+              HeaderAlignmentHorz = taCenter
+              HeaderAlignmentVert = vaCenter
+              Width = 120
+            end
+            object clJumlah2: TcxGridDBColumn
+              DataBinding.FieldName = 'Jumlah'
+              PropertiesClassName = 'TcxCurrencyEditProperties'
+              Properties.DisplayFormat = ',0.00;(,0.00)'
+              HeaderAlignmentHorz = taCenter
+              HeaderAlignmentVert = vaCenter
+              Width = 130
+            end
+          end
+          object cxGridDBTableView4: TcxGridDBTableView
+            NavigatorButtons.ConfirmDelete = False
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.SummaryGroups = <>
+            OptionsData.CancelOnExit = False
+            OptionsData.Deleting = False
+            OptionsData.DeletingConfirmation = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsView.GroupByBox = False
+          end
+          object cxGridLevel2: TcxGridLevel
+            Caption = 'Master Data'
+            GridView = cxGridDBTableView3
+          end
+        end
+      end
     end
   end
   object PopupMenu1: TPopupMenu
@@ -1212,5 +1541,9 @@ object frmBarang: TfrmBarang
       Caption = 'Hapus Record'
       OnClick = HapusRecord1Click
     end
+  end
+  object dlgSavesavedlg: TSaveDialog
+    Left = 544
+    Top = 232
   end
 end

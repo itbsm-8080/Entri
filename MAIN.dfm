@@ -3878,6 +3878,10 @@ object frmMenu: TfrmMenu
         Caption = 'Laporan YTD'
         OnClick = LaporanYTD1Click
       end
+      object LaporanKalkulasiHarga1: TMenuItem
+        Caption = 'Laporan Kalkulasi Harga'
+        OnClick = LaporanKalkulasiHarga1Click
+      end
       object HistoryHargaJual1: TMenuItem
         Caption = 'History Harga Jual'
         OnClick = HistoryHargaJual1Click

@@ -201,6 +201,7 @@ type
     LaporanStokCabang1: TMenuItem;
     dxListProduksi: TdxNavBarItem;
     DM: TMyQuery;
+    LaporanKalkulasiHarga1: TMenuItem;
     procedure FileExit1Execute(Sender: TObject);
     function ShowForm(AFormClass: TFormClass): TForm;
     procedure Maximized1Click(Sender: TObject);
@@ -338,6 +339,7 @@ type
     procedure LoadHakUser;
     procedure ApplyHakAkses;
     procedure UpdateGroupVisibility;
+    procedure LaporanKalkulasiHarga1Click(Sender: TObject);
 
 
   private
@@ -407,7 +409,7 @@ implementation
  ufrmPostingJurnalBulanan,ufrmLapBiayaBulanan,ufrmProsesGaji,ufrmLapLabaRugi,ufrmLapNeraca,ufrmProsesAvgcost,
  ufrmListSaldoHutang,ufrmLapAnggaran,
  ufrmBrowseSPK,ufrmbrowsemintabahan,ufrmUpload,ufrmbrowsestbj,
- ufrmimportabsensi,ufrmlapabsensi,ufrmliststokcabang,ufrmbrowsereturbahan,ufrmListProduksi;
+ ufrmimportabsensi,ufrmlapabsensi,ufrmliststokcabang,ufrmbrowsereturbahan,ufrmListProduksi, ufrmLapKalkulasiHarga;
 {$R *.dfm}
 
 
@@ -471,7 +473,7 @@ begin
       ShortDateFormat := 'M/d/yyyy';
       DateSeparator   := '/';
       DecimalSeparator:= '.';
-      zVersi:='5.0.21';
+      zVersi:='5.0.24';
       StatusBar1.Panels[4].Text := 'Versi ' + zversi;
       Application.UpdateFormatSettings:=True;
 // cek ver si
@@ -1621,6 +1623,14 @@ begin
 
     dxNavBar2.Groups[i].Visible := AdaVisible;
   end;
+end;
+
+procedure TfrmMenu.LaporanKalkulasiHarga1Click(Sender: TObject);
+begin
+ if ActiveMDIChild.Caption <> 'Lap Kalkulasi Harga' then
+ begin
+    ShowForm(TfrmLapKalkulasiHarga).Show;
+ end;
 end;
 
 end.
