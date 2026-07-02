@@ -663,11 +663,11 @@ ExecSQLDirect(frmMenu.conn, s);
    s:= ' delete from TSO_DTL '
       + ' where  sod_so_nomor =' + quot(FID);
 
+   i:=1;
    tt.Append(s);
    CDS.First;
   while not CDS.Eof do
   begin
-    i:=1;
     S:='insert into tso_DTL (sod_so_nomor,sod_brg_kode,sod_brg_satuan,sod_qty,sod_discpr,sod_harga,sod_keterangan,sod_nourut) values ('
       + Quot(edtNomor.Text) +','
       + IntToStr(CDS.FieldByName('SKU').AsInteger) +','

@@ -70,8 +70,8 @@ type
     dtstprvdr1: TDataSetProvider;
     sqlqry2: TSQLQuery;
     sqlqry1: TMyQuery;
-    ds3: TClientDataSet;
     ds2: TDataSource;
+    ds3: TClientDataSet;
     procedure FormDblClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
     procedure sbNewClick(Sender: TObject);
@@ -237,7 +237,7 @@ s := 'WITH '
    + '        kh.bulan, '
    + '        kh.bulan_only, '
    + '        kh.KORH_NOMOR, '
-   + '        SUM(d2.KORD_HARGA) AS total_nonbahan '
+   + '        SUM(d2.kord_NBB_NILAI) AS total_nonbahan '
    + '    FROM koreksi_hpp_perbulan kh '
    + '    INNER JOIN tkor_dtl2 d2 ON kh.KORH_NOMOR = d2.KORD_KORH_NOMOR '
    + '    GROUP BY kh.KORD_BRG_KODE, kh.bulan, kh.bulan_only, kh.KORH_NOMOR '
@@ -254,7 +254,9 @@ s := 'WITH '
    + 'barang_bulan_aktif AS ( '
    + '    SELECT KORD_BRG_KODE AS BRG_KODE, bulan, bulan_only FROM koreksi_hpp_perbulan '
    + '    UNION '
-   + '    SELECT FPD_BRG_KODE AS BRG_KODE, bulan, bulan_only FROM penjualan_perbulan '
+   + '    SELECT FPD_BRG_KODE AS BRG_KODE, bulan, bulan_only '
+   + '    FROM penjualan_perbulan '
+   + '    WHERE FPD_BRG_KODE IN (SELECT DISTINCT bk_brg_kode FROM tbarangkomposisi) '
    + '), '
    + 'faktur_jual AS ( '
    + '    SELECT '
@@ -335,11 +337,12 @@ s := 'WITH '
    + '    hpp_non_bahan AS HPPNonBahan, '
    + '    hpp_bahan_final + hpp_non_bahan AS Total, '
    + '    harga_jual AS HargaJual, '
-   + '    CASE '
-   + '        WHEN harga_jual > 0 '
-   + '        THEN ROUND(((hpp_bahan_final + hpp_non_bahan) / harga_jual) * 100, 2) '
-   + '        ELSE NULL '
-   + '    END AS Ratio '
++ '    CASE '
++ '        WHEN harga_jual > 0 '
++ '         AND (hpp_bahan_final + hpp_non_bahan) <> 0 '
++ '        THEN CAST(ROUND((harga_jual / (hpp_bahan_final + hpp_non_bahan)) * 100, 2) AS FLOAT) '
++ '        ELSE CAST(0 AS FLOAT) '
++ '    END AS Ratio '
    + 'FROM final_data '
    + 'WHERE bulan BETWEEN DATE_FORMAT(' + QuotD(StartDate.DateTime) + ', ''%Y-%m'') '
    + '                AND DATE_FORMAT(' + QuotD(EndDate.DateTime) + ', ''%Y-%m'') '
@@ -348,7 +351,7 @@ s := 'WITH '
       ds3.Close;
       sqlqry1.Connection := frmmenu.conn;
       sqlqry1.SQL.Text := s;
-       sqlqry1.Open;
+//       sqlqry1.Open;
         ds3.open;
 
 
@@ -371,7 +374,7 @@ s := 'WITH '
           if ds3.Fields[i].DataType = ftFloat then
           begin
              ds3.Fields[i].Alignment := taRightJustify;
-             TFloatField(ds3.Fields[i]).DisplayFormat := '###,###,###';
+            TFloatField(ds3.Fields[i]).DisplayFormat := '###,###,##0.00';
           end;
 
         end;

@@ -273,13 +273,14 @@ while not CDS.Eof do
    if CDS.FieldByName('NamaBarang').AsString <> '' then
    begin
         s:='insert into tkor_dtl2 '
-          + ' (KORD_KORH_NOMOR,KORD_NBB_KETERANGAN,KORD_SATUAN,kord_QTY,KORD_HARGA,KORD_NILAI,kord_nourut) values ( '
+          + ' (KORD_KORH_NOMOR,KORD_NBB_KETERANGAN,KORD_SATUAN,kord_QTY,KORD_HARGA,KORD_NILAI,kord_NBB_NILAI,kord_nourut) values ( '
           +  Quot(anomor) + ','
           +  Quot(CDS.FieldByName('NamaBarang').AsString) + ','
           +  quot(CDS.FieldByName('Satuan').AsString) + ','
           +  floatToStr(CDS.FieldByName('Qty').Asfloat) + ','
           +  floatToStr(CDS.FieldByName('Harga').Asfloat) + ','
-          +  floatToStr(CDS.FieldByName('Nilai').Asfloat) + ','
+          +  floatToStr((CDS.FieldByName('Harga').Asfloat*CDS.FieldByName('Qty').AsFloat)) + ','
+          +  floatToStr(CDS.FieldByName('nilai').Asfloat) + ','
           +  IntToStr(i)
           +');';
        tt.Append(s);
@@ -810,8 +811,6 @@ begin
      CDS.FieldByName('NamaGudang').asstring := varglobal1;
      cds.post;
   end;
-
-
 end;
 
 procedure TfrmKoreksiStok2.prosesnonbahan(aqty:Double);
@@ -837,7 +836,7 @@ begin
               CDS.FieldByName('system').asfloat :=0;
               CDS.FieldByName('qTY').asfloat :=Fields[2].Asfloat*aqty;
               CDS.FieldByName('harga').asfloat :=Fields[3].Asfloat;
-              CDS.FieldByName('NILAI').asfloat :=Fields[3].Asfloat*(Fields[2].Asfloat*aqty);
+              CDS.FieldByName('NILAI').asfloat :=Fields[2].Asfloat*Fields[3].Asfloat;
               CDS.Post;
 
             next;

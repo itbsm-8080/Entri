@@ -1192,7 +1192,7 @@ object frmFp: TfrmFp
       OleDropSource = False
       Signed = False
       TabOrder = 1
-      Text = '0.00'
+      Text = '0,00'
       Transparent = False
       Visible = True
       OnExit = edtDiscprExit
@@ -1254,7 +1254,7 @@ object frmFp: TfrmFp
       ReadOnly = True
       Signed = False
       TabOrder = 3
-      Text = '0.00'
+      Text = '0,00'
       Transparent = False
       Visible = True
       OnExit = edtDiscFakturExit
@@ -1316,7 +1316,7 @@ object frmFp: TfrmFp
       ReadOnly = True
       Signed = False
       TabOrder = 4
-      Text = '0.00'
+      Text = '0,00'
       Transparent = False
       Visible = True
       OnKeyPress = FormKeyPress
@@ -1383,7 +1383,7 @@ object frmFp: TfrmFp
       ReadOnly = True
       Signed = False
       TabOrder = 6
-      Text = '0.00'
+      Text = '0,00'
       Transparent = False
       Visible = True
       OnKeyPress = FormKeyPress
@@ -1443,7 +1443,7 @@ object frmFp: TfrmFp
       OleDropSource = False
       Signed = False
       TabOrder = 2
-      Text = '0.00'
+      Text = '0,00'
       Transparent = False
       Visible = True
       OnExit = edtDiscFakturExit
@@ -1510,7 +1510,7 @@ object frmFp: TfrmFp
       OleDropSource = False
       Signed = False
       TabOrder = 7
-      Text = '0.00'
+      Text = '0,00'
       Transparent = False
       Visible = True
       OnKeyPress = FormKeyPress
@@ -1584,7 +1584,7 @@ object frmFp: TfrmFp
       OleDropSource = False
       Signed = False
       TabOrder = 5
-      Text = '0.00'
+      Text = '0,00'
       Transparent = False
       Visible = True
       OnExit = edtDiscFakturExit

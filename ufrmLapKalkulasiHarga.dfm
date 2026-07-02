@@ -3678,8 +3678,13 @@ object frmLapKalkulasiHarga: TfrmLapKalkulasiHarga
     Top = 249
   end
   object sqlqry1: TMyQuery
-    Left = 496
-    Top = 296
+    Left = 456
+    Top = 288
+  end
+  object ds2: TDataSource
+    DataSet = ds3
+    Left = 475
+    Top = 217
   end
   object ds3: TClientDataSet
     Aggregates = <>
@@ -3689,10 +3694,5 @@ object frmLapKalkulasiHarga: TfrmLapKalkulasiHarga
     ReadOnly = True
     Left = 523
     Top = 225
-  end
-  object ds2: TDataSource
-    DataSet = sqlqry1
-    Left = 475
-    Top = 217
   end
 end
