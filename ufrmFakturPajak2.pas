@@ -213,10 +213,10 @@ begin
       refreshdata;
    except
      ShowMessage('Gagal Simpan');
-     // xRollback(frmMenu.conn);
+     
      Exit;
    end;
-    // xCommit(frmMenu.conn);
+    
 end;
 
 procedure TfrmFakturPajak2.cxButton8Click(Sender: TObject);
@@ -251,10 +251,10 @@ begin
       refreshdata;
    except
      ShowMessage('Gagal Simpan');
-     // xRollback(frmMenu.conn);
+     
      Exit;
    end;
-    // xCommit(frmMenu.conn);
+    
     Release;
 end;
 
@@ -333,9 +333,8 @@ begin
 
        s:='delete from Tfakturpajak_HDR  '
           + ' where fp_nomor = ' + quot(CDS.FieldByName('Invoice').asstring) + ';';
-        // xExecQuery(s,frmMenu.conn);
-EnsureConnected(frmMenu.conn);
-ExecSQLDirect(frmMenu.conn, s);
+          EnsureConnected(frmMenu.conn);
+  ExecSQLDirect(frmMenu.conn, s);
         s :=  ' insert into Tfakturpajak_HDR '
                    + ' (fp_nomor,fp_do_nomor,fp_tanggal,fp_fakturpajak,fp_tanggalpajak,fp_cus_kode,fp_disc_faktur,'
                    + ' fp_disc_fakturpr,fp_amount,fp_taxamount,fp_istax,ismanual,date_create,user_create) '
@@ -355,9 +354,8 @@ ExecSQLDirect(frmMenu.conn, s);
                    + QuotD(cGetServerTime,True) + ','
                    + Quot(frmMenu.KDUSER)+')';
 
-        // xExecQuery(s,frmMenu.conn);
-EnsureConnected(frmMenu.conn);
-ExecSQLDirect(frmMenu.conn, s);
+          EnsureConnected(frmMenu.conn);
+  ExecSQLDirect(frmMenu.conn, s);
 
            tt := TStringList.Create;
          s:= ' delete from tfakturpajak_dtl '
@@ -388,9 +386,8 @@ ExecSQLDirect(frmMenu.conn, s);
            try
               for i:=0 to tt.Count -1 do
               begin
-                  // xExecQuery(tt[i],frmMenu.conn);
-            EnsureConnected(frmMenu.conn);
-            ExecSQLDirect(frmMenu.conn, tt[i]);
+                  EnsureConnected(frmMenu.conn);
+ExecSQLDirect(frmMenu.conn, tt[i]);
               end;
             finally
               tt.Free;
@@ -429,16 +426,16 @@ begin
       refreshdata;
    except
      ShowMessage('Gagal Simpan');
-     // xRollback(frmMenu.conn);
+     
      Exit;
    end;
-    // xCommit(frmMenu.conn);
+    
 end;
 
 procedure TfrmFakturPajak2.btnRefreshClick(Sender: TObject);
 var
   s:string;
-  tsql:TMyQuery;
+  tsql:TmyQuery;
   i:Integer;
 begin
   if chkManual.Checked then
@@ -540,7 +537,7 @@ begin
      else
        anegri := '010';
     If CDS.State <> dsEdit then CDS.Edit;
-      CDS.FieldByName('noPajak').AsString        := anegri+'.'+LeftStr(edtpajak.Text,Length(edtpajak.Text)-8)+rightstr(inttostr(100000000+StrToInt(RightStr(edtPajak.Text,8))+i),8);
+      CDS.FieldByName('noPajak').AsString        := anegri+'.'+LeftStr(edtpajak.Text,Length(edtpajak.Text)-8)+inttostr(StrToInt(RightStr(edtPajak.Text,8))+i);
       CDS.FieldByName('tanggal_pajak').AsDateTime  := dtTanggalPajak.DateTime;
       CDS.post;
     Inc(i);

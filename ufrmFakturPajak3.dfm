@@ -1,6 +1,6 @@
-object frmFakturPajak2: TfrmFakturPajak2
-  Left = 84
-  Top = 170
+object frmFakturPajak3: TfrmFakturPajak3
+  Left = 189
+  Top = 157
   Width = 1196
   Height = 558
   Caption = 'Faktur Pajak Versi 2'
@@ -25,7 +25,7 @@ object frmFakturPajak2: TfrmFakturPajak2
     Left = 0
     Top = 41
     Width = 1180
-    Height = 87
+    Height = 56
     Align = alTop
     BevelInner = bvRaised
     Color = clWhite
@@ -102,20 +102,6 @@ object frmFakturPajak2: TfrmFakturPajak2
       Height = 13
       Caption = 's/d'
     end
-    object Label16: TLabel
-      Left = 26
-      Top = 33
-      Width = 60
-      Height = 13
-      Caption = 'Nomor Pajak'
-    end
-    object Label17: TLabel
-      Left = 26
-      Top = 54
-      Width = 43
-      Height = 13
-      Caption = 'Tgl Pajak'
-    end
     object dtTanggal: TDateTimePicker
       Left = 93
       Top = 7
@@ -136,83 +122,13 @@ object frmFakturPajak2: TfrmFakturPajak2
       TabOrder = 1
       OnKeyPress = FormKeyPress
     end
-    object edtPajak: TAdvEdit
-      Left = 94
-      Top = 29
-      Width = 203
-      Height = 21
-      AutoFocus = False
-      EditAlign = eaLeft
-      EditType = etString
-      ErrorMarkerPos = 0
-      ErrorMarkerLen = 0
-      ErrorColor = clRed
-      ErrorFontColor = clWhite
-      ExcelStyleDecimalSeparator = False
-      Flat = False
-      FlatLineColor = clBlack
-      FlatParentColor = True
-      FocusAlign = eaDefault
-      FocusBorder = False
-      FocusColor = clWhite
-      FocusFontColor = clWindowText
-      FocusLabel = False
-      FocusWidthInc = 0
-      ModifiedColor = clHighlight
-      DisabledColor = clSilver
-      URLColor = clBlue
-      ReturnIsTab = False
-      LengthLimit = 0
-      TabOnFullLength = False
-      Precision = 0
-      LabelPosition = lpLeftTop
-      LabelMargin = 4
-      LabelTransparent = False
-      LabelAlwaysEnabled = False
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -11
-      LabelFont.Name = 'Tahoma'
-      LabelFont.Style = []
-      Lookup.CaseSensitive = False
-      Lookup.Color = clWindow
-      Lookup.DisplayCount = 4
-      Lookup.Enabled = False
-      Lookup.History = False
-      Lookup.NumChars = 2
-      Lookup.Multi = False
-      Lookup.Separator = ';'
-      Persistence.Enable = False
-      Persistence.Location = plInifile
-      Color = clWhite
-      Enabled = True
-      HintShowLargeText = False
-      MaxLength = 40
-      OleDropTarget = False
-      OleDropSource = False
-      Signed = False
-      TabOrder = 2
-      Transparent = False
-      Visible = True
-      OnKeyPress = FormKeyPress
-    end
-    object dtTanggalPajak: TDateTimePicker
-      Left = 94
-      Top = 50
-      Width = 108
-      Height = 21
-      Date = 42648.237043148150000000
-      Time = 42648.237043148150000000
-      TabOrder = 3
-      OnKeyPress = FormKeyPress
-    end
     object btnRefresh: TcxButton
       Left = 525
-      Top = 8
+      Top = 4
       Width = 139
-      Height = 54
+      Height = 41
       Caption = '&Refresh'
-      TabOrder = 4
+      TabOrder = 2
       OnClick = btnRefreshClick
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -254,11 +170,11 @@ object frmFakturPajak2: TfrmFakturPajak2
     end
     object cxButton4: TcxButton
       Left = 668
-      Top = 7
+      Top = 4
       Width = 135
-      Height = 55
+      Height = 42
       Caption = '&Proses'
-      TabOrder = 5
+      TabOrder = 3
       OnClick = cxButton4Click
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -304,8 +220,7 @@ object frmFakturPajak2: TfrmFakturPajak2
       Width = 97
       Height = 17
       Caption = 'Faktur Manual'
-      TabOrder = 6
-      Visible = False
+      TabOrder = 4
     end
   end
   object AdvPanel3: TAdvPanel
@@ -429,7 +344,7 @@ object frmFakturPajak2: TfrmFakturPajak2
       Height = 31
       Caption = '&Simpan && Tutup'
       TabOrder = 1
-      OnClick = cxButton2Click
+      Visible = False
       Align = alLeft
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -477,7 +392,6 @@ object frmFakturPajak2: TfrmFakturPajak2
       Caption = '&Simpan '
       TabOrder = 0
       Visible = False
-      OnClick = cxButton1Click
       Align = alLeft
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -525,7 +439,6 @@ object frmFakturPajak2: TfrmFakturPajak2
       Caption = '&Simpan && Cetak'
       TabOrder = 3
       Visible = False
-      OnClick = cxButton3Click
       Align = alLeft
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
@@ -636,9 +549,9 @@ object frmFakturPajak2: TfrmFakturPajak2
     object lbljudul: TLabel
       Left = 15
       Top = 11
-      Width = 154
+      Width = 164
       Height = 19
-      Caption = 'Input Faktur Pajak'
+      Caption = 'Proses Faktur Pajak'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -649,9 +562,9 @@ object frmFakturPajak2: TfrmFakturPajak2
   end
   object AdvPanel4: TAdvPanel
     Left = 0
-    Top = 128
+    Top = 97
     Width = 1180
-    Height = 356
+    Height = 387
     Align = alClient
     BevelInner = bvRaised
     Color = clWhite
@@ -718,7 +631,7 @@ object frmFakturPajak2: TfrmFakturPajak2
       Left = 2
       Top = 2
       Width = 1176
-      Height = 352
+      Height = 383
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -742,7 +655,6 @@ object frmFakturPajak2: TfrmFakturPajak2
             Kind = skSum
           end
           item
-            Column = clNilai
           end
           item
             Format = ',0;(,0)'
@@ -760,7 +672,7 @@ object frmFakturPajak2: TfrmFakturPajak2
         OptionsView.GroupByBox = False
         OptionsView.HeaderHeight = 23
         object clNo: TcxGridDBColumn
-          DataBinding.FieldName = 'No'
+          DataBinding.FieldName = 'Baris'
           PropertiesClassName = 'TcxSpinEditProperties'
           OnGetDisplayText = clNoGetDisplayText
           HeaderAlignmentHorz = taCenter
@@ -768,28 +680,6 @@ object frmFakturPajak2: TfrmFakturPajak2
           Options.Editing = False
           Options.Focusing = False
           Width = 36
-        end
-        object clSalesman: TcxGridDBColumn
-          Caption = 'Salesman'
-          DataBinding.FieldName = 'salesman'
-          HeaderAlignmentHorz = taCenter
-          HeaderAlignmentVert = vaCenter
-          Width = 103
-        end
-        object clCustomer: TcxGridDBColumn
-          Caption = 'Customer'
-          DataBinding.FieldName = 'customer'
-          Width = 191
-        end
-        object clInvoice: TcxGridDBColumn
-          Caption = 'Faktur Penjualan'
-          DataBinding.FieldName = 'INVOICE'
-          PropertiesClassName = 'TcxTextEditProperties'
-          Properties.ReadOnly = True
-          HeaderAlignmentVert = vaCenter
-          Options.Editing = False
-          Options.Focusing = False
-          Width = 98
         end
         object clTglInvoice: TcxGridDBColumn
           Caption = 'Tanggal Faktur'
@@ -800,92 +690,79 @@ object frmFakturPajak2: TfrmFakturPajak2
           Options.Focusing = False
           Width = 107
         end
-        object clPPN: TcxGridDBColumn
-          Caption = 'PPN'
-          DataBinding.FieldName = 'ppn'
-          GroupSummaryAlignment = taCenter
-          HeaderAlignmentHorz = taCenter
-          HeaderAlignmentVert = vaCenter
+        object clJenisfaktur: TcxGridDBColumn
+          Caption = 'Jenis Faktur'
+          DataBinding.FieldName = 'JenisFaktur'
           Width = 97
         end
-        object clNilai: TcxGridDBColumn
-          DataBinding.FieldName = 'Nilai'
-          PropertiesClassName = 'TcxCurrencyEditProperties'
-          GroupSummaryAlignment = taCenter
+        object clkodetransaksi: TcxGridDBColumn
+          Caption = 'Kode Transaksi'
+          DataBinding.FieldName = 'KodeTransaksi'
+          Width = 91
+        end
+        object clKeteranganTambahan: TcxGridDBColumn
+          Caption = 'Keterangan Tambahan'
+          DataBinding.FieldName = 'keterangantambahan'
           HeaderAlignmentHorz = taCenter
           HeaderAlignmentVert = vaCenter
-          Width = 106
+          Width = 145
         end
-        object clStatus: TcxGridDBColumn
-          Caption = 'Status'
-          DataBinding.FieldName = 'status'
-          PropertiesClassName = 'TcxCheckBoxProperties'
-          Properties.DisplayChecked = 'False'
-          Properties.ValueChecked = 1
-          Properties.ValueUnchecked = 0
-          HeaderAlignmentHorz = taCenter
-          HeaderAlignmentVert = vaCenter
-          Width = 64
-        end
-        object clNegri: TcxGridDBColumn
-          Caption = 'Negeri'
-          DataBinding.FieldName = 'negri'
-          PropertiesClassName = 'TcxCheckBoxProperties'
-          Properties.DisplayChecked = 'False'
-          Properties.ValueChecked = 1
-          Properties.ValueUnchecked = '0'
-          HeaderAlignmentHorz = taCenter
-          HeaderAlignmentVert = vaCenter
-        end
-        object clManual: TcxGridDBColumn
-          Caption = 'Manual'
-          DataBinding.FieldName = 'ismanual'
-          PropertiesClassName = 'TcxCheckBoxProperties'
-          Properties.ValueChecked = 1
-          Properties.ValueUnchecked = 0
-          HeaderAlignmentHorz = taCenter
-          HeaderAlignmentVert = vaCenter
-        end
-        object clNoPajak: TcxGridDBColumn
-          Caption = 'No Pajak'
-          DataBinding.FieldName = 'NoPajak'
+        object cldokumen: TcxGridDBColumn
+          Caption = 'Dokumen Pendukung'
+          DataBinding.FieldName = 'dokumenpendukung'
           PropertiesClassName = 'TcxTextEditProperties'
-          HeaderAlignmentHorz = taCenter
-          HeaderAlignmentVert = vaCenter
-          Width = 130
-        end
-        object clTanggalPajak: TcxGridDBColumn
-          Caption = 'Tanggal Pajak'
-          DataBinding.FieldName = 'Tanggal_Pajak'
-          PropertiesClassName = 'TcxDateEditProperties'
           Properties.ReadOnly = True
-          HeaderAlignmentHorz = taCenter
           HeaderAlignmentVert = vaCenter
-          Width = 97
+          Options.Editing = False
+          Options.Focusing = False
+          Width = 113
         end
-        object cxGrdMainColumn1: TcxGridDBColumn
-          Caption = 'Kode Cust'
-          DataBinding.FieldName = 'kode_cust'
-          Visible = False
+        object clreferensi: TcxGridDBColumn
+          DataBinding.FieldName = 'Referensi'
         end
-        object cxGrdMainColumn2: TcxGridDBColumn
-          Caption = 'do_Nomor'
-          DataBinding.FieldName = 'do_nomor'
-          Visible = False
+        object clcapfasilitas: TcxGridDBColumn
+          Caption = 'Cap Fasilitas'
+          DataBinding.FieldName = 'capfasilitas'
+          Width = 90
         end
-        object cxGrdMainColumn3: TcxGridDBColumn
-          Caption = 'DTP'
-          DataBinding.FieldName = 'isDTP'
-          PropertiesClassName = 'TcxCheckBoxProperties'
-          Properties.ValueChecked = 1
-          Properties.ValueUnchecked = 0
+        object clidtkupenjual: TcxGridDBColumn
+          Caption = 'ID TKU Penjual'
+          DataBinding.FieldName = 'idtkupenjual'
         end
-        object cxGrdMainColumn4: TcxGridDBColumn
-          Caption = 'adaRetur'
-          DataBinding.FieldName = 'adaretur'
-          PropertiesClassName = 'TcxCheckBoxProperties'
-          Properties.ValueChecked = '1'
-          Properties.ValueUnchecked = '0'
+        object clNpwpPembeli: TcxGridDBColumn
+          Caption = 'NPWP/NIK PEMBELI'
+          DataBinding.FieldName = 'npwppembeli'
+        end
+        object clJenisIdPembeli: TcxGridDBColumn
+          Caption = 'Jenis ID Pembeli'
+          DataBinding.FieldName = 'jenisidpembeli'
+          Width = 88
+        end
+        object clNegarapembeli: TcxGridDBColumn
+          Caption = 'Negara Pembeli'
+          DataBinding.FieldName = 'NegaraPembeli'
+        end
+        object clnodokpembeli: TcxGridDBColumn
+          Caption = 'Nomor Dokumen Pembeli'
+          DataBinding.FieldName = 'nomordokumenpembeli'
+          Width = 122
+        end
+        object clnamapembeli: TcxGridDBColumn
+          Caption = 'Nama Pembeli'
+          DataBinding.FieldName = 'namapembeli'
+          Width = 103
+        end
+        object clAlamatPembeli: TcxGridDBColumn
+          Caption = 'Alamat Pembeli'
+          DataBinding.FieldName = 'alamatpembeli'
+        end
+        object clEmailPembeli: TcxGridDBColumn
+          Caption = 'Email Pembeli'
+          DataBinding.FieldName = 'emailpembeli'
+        end
+        object clidtkupembeli: TcxGridDBColumn
+          Caption = 'ID TKU Pembeli'
+          DataBinding.FieldName = 'idtkupembeli'
         end
       end
       object cxGrdDetail: TcxGridDBTableView
@@ -923,13 +800,9 @@ object frmFakturPajak2: TfrmFakturPajak2
   object PopupMenu1: TPopupMenu
     Left = 584
     Top = 240
-    object CheckAllStatus1: TMenuItem
-      Caption = 'Check All Status'
-      OnClick = CheckAllStatus1Click
-    end
-    object UncheckAllStatus1: TMenuItem
-      Caption = 'Uncheck All Status'
-      OnClick = UncheckAllStatus1Click
+    object HapusBaris1: TMenuItem
+      Caption = 'Hapus Baris'
+      OnClick = HapusBaris1Click
     end
   end
 end

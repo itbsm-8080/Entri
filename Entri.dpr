@@ -141,7 +141,8 @@ uses
   ufrmListStokCabang in 'ufrmListStokCabang.pas' {frmListStokCabang},
   ufrmBrowseReturBahan in 'ufrmBrowseReturBahan.pas' {frmBrowseReturBahan},
   ufrmReturBahan in 'ufrmReturBahan.pas' {frmReturBahan},
-  ufrmLapKalkulasiHarga in 'ufrmLapKalkulasiHarga.pas' {frmLapKalkulasiHarga};
+  ufrmLapKalkulasiHarga in 'ufrmLapKalkulasiHarga.pas' {frmLapKalkulasiHarga},
+  ufrmFakturPajak3 in 'ufrmFakturPajak3.pas' {frmFakturPajak3};
 
 {$R *.res}
 

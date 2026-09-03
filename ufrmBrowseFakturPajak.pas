@@ -25,6 +25,7 @@ type
     cxButton5: TcxButton;
     SaveDialog1: TSaveDialog;
     cxButton9: TcxButton;
+    cxButton10: TcxButton;
   procedure btnRefreshClick(Sender: TObject);
   procedure FormShow(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -33,6 +34,7 @@ type
     procedure cxButton4Click(Sender: TObject);
     procedure cxButton3Click(Sender: TObject);
     procedure cxButton9Click(Sender: TObject);
+    procedure cxButton10Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,7 +45,7 @@ var
   frmBrowseFakturPajak: TfrmBrowseFakturPajak;
 
 implementation
-   uses ufrmFakturPajak2,ufrmFakturPajak,Ulib, MAIN, uModuleConnection;
+   uses ufrmFakturPajak2,ufrmFakturPajak3,ufrmFakturPajak,Ulib, MAIN, uModuleConnection;
 {$R *.dfm}
 
 procedure TfrmBrowseFakturPajak.btnRefreshClick(Sender: TObject);
@@ -150,24 +152,22 @@ begin
       then Exit ;
        s:='delete from tfakturpajak_dtl '
         + ' where fpd_fp_nomor = ' + quot(CDSMaster.FieldByname('Nomor').AsString) + ';' ;
-      // xExecQuery(s,frmMenu.conn);
-EnsureConnected(frmMenu.conn);
-ExecSQLDirect(frmMenu.conn, s);
+        EnsureConnected(frmMenu.conn);
+  ExecSQLDirect(frmMenu.conn, s);
 
        s:='delete from tfakturpajak_hdr '
         + ' where fp_nomor = ' + quot(CDSMaster.FieldByname('Nomor').AsString) + ';' ;
-      // xExecQuery(s,frmMenu.conn);
-EnsureConnected(frmMenu.conn);
-ExecSQLDirect(frmMenu.conn, s);
+        EnsureConnected(frmMenu.conn);
+  ExecSQLDirect(frmMenu.conn, s);
 
 
       CDSMaster.Delete;
    except
      MessageDlg('Gagal Hapus',mtError, [mbOK],0);
-     // xRollback(frmMenu.conn);
+     
      Exit;
    end;
-    // xCommit(frmMenu.conn);
+    
 
 end;
 
@@ -175,10 +175,12 @@ end;
 procedure TfrmBrowseFakturPajak.cxButton3Click(Sender: TObject);
 var
 newFile : TextFile;
-tsql : TMyQuery;
-tsql2 : TMyQuery;
+tsql : TmyQuery;
+tsql2 : TmyQuery;
 s : string ;
 anamanpwp,aalamatnpwp : string;
+sheader,sheader2,sdetail :String;
+zdpp,zppn :double;
 begin
   if SaveDialog1.Execute then
   begin
@@ -288,38 +290,52 @@ begin
       with tsql do
       begin
         try
-          if not tsql.eof then
-          begin
-            WriteLn(newFile, '"'+fieldbyname('FK').asstring + '","'+ fieldbyname('KD_JENIS_TRANSAKSI').asstring + '","'
-            + fieldbyname('FG_PENGGANTI').asstring+'","'+COPY(fieldbyname('NOMOR_FAKTUR').asstring,4,Length(fieldbyname('NOMOR_FAKTUR').asstring)-3) + '","'
-            + fieldbyname('MASA_PAJAK').asstring + '","' + fieldbyname('TAHUN_PAJAK').asstring + '","' +fieldbyname('TANGGAL_FAKTUR').asstring +'","'
-            + fieldbyname('NPWP').asstring + '","' +fieldbyname('NAMA').asstring+'","' + FieldByName('ALAMAT_LENGKAP').AsString +'","'
-            + formatfloat('##########',fieldByName('DPP').asfloat) +'","' + formatfloat('#########',FieldByName('PPNTOTAL').asfloat)+'","'
-            + FieldByName('JUMLAH_PPNBM').AsString+'","'+ FieldByName('ID_KETERANGAN_TAMBAHAN').AsString + '","'
-            + FieldByName('FG_UANG_MUKA').AsString+'","'+fieldbyname('UANG_MUKA_DPP').AsString+'","'
-            + FieldByName('UANG_MUKA_PPN').AsString+'","'+fieldbyname('UANG_MUKA_PPNBM').AsString+'","'+fieldbyname('REFERENSI').AsString +'","0"');
-
-
-            WriteLn(newFile,'"'+ fieldbyname('LT').asstring + '","'
-            + anamanpwp+'","'+aalamatnpwp+ '",'
-            + fieldbyname('BLOK').asstring + ',' + fieldbyname('NOMOR').asstring + ',' +fieldbyname('RT').asstring +','
-            + fieldbyname('RW').asstring);
-
-          end;
           tsql.First;
+          sdetail:='';
+          zdpp:=0;
+          zppn:=0;
           while not tsql.eof do
           begin
 
-            WriteLn(newFile,'"'+ fieldbyname('OF').asstring + '","'+ fieldbyname('KODE_OBJEK').asstring + '","'
+            sdetail  := sdetail + '"'+ fieldbyname('OF').asstring + '","'+ fieldbyname('KODE_OBJEK').asstring + '","'
             + fieldbyname('NAMABARANG').asstring+'","'+fieldbyname('HARGA_SATUAN').asstring + '","'
             + fieldbyname('JUMLAH_BARANG').asstring + '","' + fieldbyname('HARGA_TOTAL').asstring + '","' +fieldbyname('DISKON').asstring +'","'
             + fieldbyname('HARGA_TOTAL2').asstring + '","' +fieldbyname('PPN').asstring+'","' + FieldByName('TARIF_PPNBM').AsString +'","'
-            + FieldByName('PPNBM').AsString+'"');
+            + FieldByName('PPNBM').AsString+'"';
 
 
-
+            zdpp := zdpp+fieldbyname('HARGA_TOTAL2').AsFloat;
+            zppn := zppn+fieldbyname('PPN').AsFloat;
             next;
+             if not eof then
+               sdetail :=sdetail+chr(13);
           end;
+          tsql.First;
+
+
+          if not tsql.eof then
+          begin
+            sheader := '"'+fieldbyname('FK').asstring + '","'+ fieldbyname('KD_JENIS_TRANSAKSI').asstring + '","'
+            + fieldbyname('FG_PENGGANTI').asstring+'","'+COPY(fieldbyname('NOMOR_FAKTUR').asstring,4,Length(fieldbyname('NOMOR_FAKTUR').asstring)-3) + '","'
+            + fieldbyname('MASA_PAJAK').asstring + '","' + fieldbyname('TAHUN_PAJAK').asstring + '","' +fieldbyname('TANGGAL_FAKTUR').asstring +'","'
+            + fieldbyname('NPWP').asstring + '","' +fieldbyname('NAMA').asstring+'","' + FieldByName('ALAMAT_LENGKAP').AsString +'","'
+            + formatfloat('##########',trunc(zdpp)) +'","' + formatfloat('#########',trunc(zppn))+'","'
+            + FieldByName('JUMLAH_PPNBM').AsString+'","'+ FieldByName('ID_KETERANGAN_TAMBAHAN').AsString + '","'
+            + FieldByName('FG_UANG_MUKA').AsString+'","'+fieldbyname('UANG_MUKA_DPP').AsString+'","'
+            + FieldByName('UANG_MUKA_PPN').AsString+'","'+fieldbyname('UANG_MUKA_PPNBM').AsString+'","'+fieldbyname('REFERENSI').AsString +'","0"';
+
+
+            sheader2 := '"'+ fieldbyname('LT').asstring + '","'
+            + anamanpwp+'","'+aalamatnpwp+ '",'
+            + fieldbyname('BLOK').asstring + ',' + fieldbyname('NOMOR').asstring + ',' +fieldbyname('RT').asstring +','
+            + fieldbyname('RW').asstring;
+
+          end;
+            WriteLn(newFile,sheader);
+            WriteLn(newFile,sheader2);
+            WriteLn(newFile,sdetail);
+
+
         finally
           free;
         end;
@@ -334,15 +350,27 @@ end;
 
 procedure TfrmBrowseFakturPajak.cxButton9Click(Sender: TObject);
 var
-  frmFakturPajak2: TfrmFakturPajak2;
+  frmFakturPajak3: TfrmFakturPajak3;
+begin
+  inherited;
+    if ActiveMDIChild.Caption <> 'Faktur Pajak Versi 3' then
+   begin
+      frmFakturPajak3  := frmmenu.ShowForm(TfrmFakturPajak3) as TfrmFakturPajak3;
+
+   end;
+   frmFakturPajak3.Show;
+end;
+
+procedure TfrmBrowseFakturPajak.cxButton10Click(Sender: TObject);
 begin
   inherited;
     if ActiveMDIChild.Caption <> 'Faktur Pajak Versi 2' then
    begin
-      frmFakturPajak2  := frmmenu.ShowForm(TfrmFakturPajak2) as TfrmFakturPajak2;
+      frmFakturPajak2 := frmmenu.ShowForm(TfrmFakturPajak2) as TfrmFakturPajak2;
 
    end;
    frmFakturPajak2.Show;
+
 end;
 
 end.

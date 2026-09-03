@@ -473,7 +473,7 @@ begin
       ShortDateFormat := 'M/d/yyyy';
       DateSeparator   := '/';
       DecimalSeparator:= '.';
-      zVersi:='5.0.25';
+      zVersi:='5.0.27';
       StatusBar1.Panels[4].Text := 'Versi ' + zversi;
       Application.UpdateFormatSettings:=True;
 // cek ver si

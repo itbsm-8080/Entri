@@ -825,8 +825,9 @@ begin
       with tsql do
       begin
         try
-          if not eof then
+//          if not eof then
              cds.EmptyDataSet;
+             
           while not eof do
           begin
               cds.Append;
