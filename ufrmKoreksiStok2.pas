@@ -755,13 +755,19 @@ var
   s:string;
   tsql:TMyQuery;
   aqty : double;
+  alastcost : Double;
 begin
   aqty := strtofloat(edtqty.Text);
-s:='select  brg_kode,brg_nama,brg_satuan,bk_qty,brg_lastcost ,'
+s:='select  brg_kode,brg_nama,brg_satuan,bk_qty,'
+      + ' (select ifnull(MST_HARGABELI,0) from tmasterstok where mst_brg_kode=brg_kode and mst_hargabeli > 1'
+      + ' and (mst_noreferensi like "%RI%" or mst_noreferensi like "%KOR%") and mst_stok_in > 0'
+      + ' order by mst_tanggal desc LIMIT 1 ) brg_lastcost ,'
       + ' (select sum(mst_stok_in-mst_stok_out) from tmasterstok where mst_brg_kode=bk_bhn_kode) sistem '
       + ' ,brg_gdg_default,gdg_nama from tbarangkomposisi inner join tbarang on brg_kode=bk_bhn_kode '
       + ' left join tgudang on gdg_kode=brg_gdg_default'
       + ' where bk_brg_kode='+ Quot(edtkodebarang.text);
+
+       
       tsql:= xOpenQuery(s,frmmenu.conn);
       with tsql do
       begin
@@ -825,9 +831,8 @@ begin
       with tsql do
       begin
         try
-//          if not eof then
+          if not eof then
              cds.EmptyDataSet;
-             
           while not eof do
           begin
               cds.Append;
